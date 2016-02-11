@@ -76,8 +76,8 @@ public class Messages {
         }
     }
 
-    public void addMessage(Message m) {
-        messages.add(m);
+    public void addMessage(String author, String message) {
+        messages.add(new Message(author, message));
     }
 
     private void oneMessagePrint(Message message) {
@@ -97,12 +97,44 @@ public class Messages {
         }
     }
 
+    public void printMessageByKeyWord(String KeyWord) {
+        for (Message message : messages) {
+            if (message.getAuthor().indexOf(KeyWord) != -1)
+                oneMessagePrint(message);
+        }
+    }
+
+    public void printMessageByRegExKeyWord(String RegExKeyWord) {
+        Pattern p = Pattern.compile(RegExKeyWord);
+        for (Message message : messages) {
+            Matcher m = p.matcher(message.getMessage());
+            if (m.find())
+                oneMessagePrint(message);
+        }
+    }
+
     public void printMessageByPeriod(String start, String end) {
         String[] parsedStart = start.split("[.]");
         String[] parsedEnd = end.split("[.]");
         int DAY = 0;
         int Month = 1;
         int YEAR = 2;
-        Date startDate= new Date();
+        int startDay = Integer.parseInt(parsedStart[DAY]);
+        int startMonth = Integer.parseInt(parsedStart[Month]);
+        int startYear = Integer.parseInt(parsedStart[YEAR]);
+        int endDay = Integer.parseInt(parsedEnd[DAY]);
+        int endMonth = Integer.parseInt(parsedEnd[Month]);
+        int endYear = Integer.parseInt(parsedEnd[YEAR]);
+        long startTimestamp = new GregorianCalendar(startYear, startMonth, startDay).getTimeInMillis();
+        long endTimestamp = new GregorianCalendar(startYear, startMonth, startDay).getTimeInMillis();
+        if (startTimestamp > endTimestamp) {
+            long temp = startTimestamp;
+            startTimestamp = endTimestamp;
+            endTimestamp = temp;
+        }
+        for (Message message : messages) {
+            if (message.getTimestamp() > startTimestamp && message.getTimestamp() < endTimestamp)
+                oneMessagePrint(message);
+        }
     }
 }

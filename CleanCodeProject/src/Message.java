@@ -1,3 +1,5 @@
+import java.util.Date;
+import java.util.UUID;
 import java.util.regex.Matcher;
 
 /**
@@ -9,12 +11,30 @@ public class Message {
     private long timestamp;
     private String message;
 
-    public Message(String id, String message, String author, long timestamp) {
+    public Message(String message, String author, String id, long timestamp) {
         this.id = new String(id);
         this.message = new String(message);
         this.author = new String(author);
         this.timestamp = timestamp;
     }
+
+    public Message(String author, String message) {
+        this.id = new String(generateId());
+        this.message = new String(message);
+        this.author = new String(author);
+        this.timestamp = generateTimestamp();
+    }
+
+    private long generateTimestamp() {
+        Date d = new Date();
+        return d.getTime();
+    }
+
+    private String generateId() {
+        UUID idOne = UUID.randomUUID();
+        return idOne.toString();
+    }
+
 
     public String getId() {
         return id;
@@ -23,10 +43,12 @@ public class Message {
     public String getAuthor() {
         return author;
     }
-    public String getMessage(){
+
+    public String getMessage() {
         return message;
     }
-    public long getTimestamp(){
+
+    public long getTimestamp() {
         return timestamp;
     }
 }
