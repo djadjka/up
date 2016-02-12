@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.*;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,6 +23,7 @@ public class Messages {
         this.gson = new GsonBuilder().create();
     }
 
+
     public void readMessages(File fin) {
         try {
             Scanner sc = new Scanner(fin);
@@ -36,6 +38,7 @@ public class Messages {
             }
         } catch (FileNotFoundException e) {
             System.out.println("FIle not found");
+
         }
     }
 
@@ -51,21 +54,12 @@ public class Messages {
                     ps.print(",");
 
             }
-
             ps.print("]");
         } catch (FileNotFoundException e) {
             System.out.println("FIle not found");
         }
     }
 
-    public void sortMessages() {
-        Collections.sort(messages, new Comparator<Message>() {
-            @Override
-            public int compare(Message o1, Message o2) {
-                return (int) (o1.getTimestamp() - o2.getTimestamp());
-            }
-        });
-    }
 
     public void delMessage(String id) {
         for (Message message : messages) {
@@ -90,6 +84,20 @@ public class Messages {
         }
     }
 
+    public void printMessageHistory() {
+        List<Message> copy = new ArrayList<>();
+        copy.addAll(messages);
+        Collections.sort(copy, new Comparator<Message>() {
+            @Override
+            public int compare(Message o1, Message o2) {
+                return (int) (o1.getTimestamp() - o2.getTimestamp());
+            }
+        });
+        for (Message message : copy) {
+            oneMessagePrint(message);
+        }
+    }
+
     public void printMessageByAuthor(String author) {
         for (Message message : messages) {
             if (message.getAuthor().compareTo(author) == 0)
@@ -99,7 +107,7 @@ public class Messages {
 
     public void printMessageByKeyWord(String KeyWord) {
         for (Message message : messages) {
-            if (message.getAuthor().indexOf(KeyWord) != -1)
+            if (message.getMessage().indexOf(KeyWord) != -1)
                 oneMessagePrint(message);
         }
     }
@@ -114,27 +122,33 @@ public class Messages {
     }
 
     public void printMessageByPeriod(String start, String end) {
-        String[] parsedStart = start.split("[.]");
-        String[] parsedEnd = end.split("[.]");
-        int DAY = 0;
-        int Month = 1;
-        int YEAR = 2;
-        int startDay = Integer.parseInt(parsedStart[DAY]);
-        int startMonth = Integer.parseInt(parsedStart[Month]);
-        int startYear = Integer.parseInt(parsedStart[YEAR]);
-        int endDay = Integer.parseInt(parsedEnd[DAY]);
-        int endMonth = Integer.parseInt(parsedEnd[Month]);
-        int endYear = Integer.parseInt(parsedEnd[YEAR]);
-        long startTimestamp = new GregorianCalendar(startYear, startMonth, startDay).getTimeInMillis();
-        long endTimestamp = new GregorianCalendar(startYear, startMonth, startDay).getTimeInMillis();
-        if (startTimestamp > endTimestamp) {
-            long temp = startTimestamp;
-            startTimestamp = endTimestamp;
-            endTimestamp = temp;
-        }
-        for (Message message : messages) {
-            if (message.getTimestamp() > startTimestamp && message.getTimestamp() < endTimestamp)
-                oneMessagePrint(message);
+        try {
+            String[] parsedStart = start.split("[.]");
+            String[] parsedEnd = end.split("[.]");
+            int DAY = 0;
+            int Month = 1;
+            int YEAR = 2;
+            int startDay = Integer.parseInt(parsedStart[DAY]);
+            int startMonth = Integer.parseInt(parsedStart[Month]);
+            int startYear = Integer.parseInt(parsedStart[YEAR]);
+            int endDay = Integer.parseInt(parsedEnd[DAY]);
+            int endMonth = Integer.parseInt(parsedEnd[Month]);
+            int endYear = Integer.parseInt(parsedEnd[YEAR]);
+            long startTimestamp = new GregorianCalendar(startYear, startMonth, startDay).getTimeInMillis();
+            long endTimestamp = new GregorianCalendar(startYear, startMonth, startDay).getTimeInMillis();
+            if (startTimestamp > endTimestamp) {
+                long temp = startTimestamp;
+                startTimestamp = endTimestamp;
+                endTimestamp = temp;
+            }
+            for (Message message : messages) {
+                if (message.getTimestamp() > startTimestamp && message.getTimestamp() < endTimestamp)
+                    oneMessagePrint(message);
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("bad data Format");
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("bad data Format");
         }
     }
 }
