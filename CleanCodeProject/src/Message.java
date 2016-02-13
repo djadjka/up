@@ -2,9 +2,7 @@ import java.util.Date;
 import java.util.UUID;
 import java.util.regex.Matcher;
 
-/**
- * Created by djadjka_by on 09.02.2016.
- */
+
 public class Message {
     private String id;
     private String author;

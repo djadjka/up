@@ -68,11 +68,12 @@ public class ConsoleInterface {
                     default:
                         break;
                 }
-            }catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 System.out.println("error");
             }
         }
     }
+
     private void readMessages() {
         System.out.println("enter the path to the file");
         sc.skip("[\r\n]+");
@@ -100,32 +101,32 @@ public class ConsoleInterface {
     }
 
     public void printMessageHistory() {
-        messages.printMessageHistory();
+        messages.printMessages(messages.getMessageHistory());
     }
 
     public void printMessageByAuthor() {
         System.out.println("enter user name");
-        messages.printMessageByAuthor(sc.next());
-    }
+            messages.printMessages(messages.getMessageByAuthor(sc.next()));
+        }
 
     public void printMessageByPeriod() {
         System.out.println("enter start period (dd.mm.yy)");
         String start = sc.next();
         System.out.println("enter end period (dd.mm.yy)");
         String end = sc.next();
-        messages.printMessageByPeriod(start, end);
+        messages.printMessages(messages.getMessageByPeriod(start, end));
     }
 
     public void printMessageByRegExKeyWord() {
         System.out.println("enter regex");
         sc.skip("[\r\n]+");
-        messages.printMessageByRegExKeyWord(sc.nextLine());
+        messages.printMessages(messages.getMessageByRegExKeyWord(sc.nextLine()));
     }
 
     public void printMessageByKeyWord() {
         System.out.println("enter key word");
         sc.skip("[\r\n]+");
-        messages.printMessageByKeyWord(sc.nextLine());
+        messages.printMessages(messages.getMessageByKeyWord(sc.nextLine()));
     }
 
 }

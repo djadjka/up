@@ -1,6 +1,6 @@
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
+import com.google.gson.JsonSyntaxException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
@@ -9,23 +9,23 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Created by djadjka_by on 09.02.2016.
- */
+
 public class Messages {
     private List<Message> messages;
 
     private Gson gson;
+    private Log log;
 
     public Messages() {
         this.messages = new ArrayList<>();
-
         this.gson = new GsonBuilder().create();
+        log = new Log("logfile.txt");
     }
 
 
     public void readMessages(File fin) {
         try {
+            int counter = 0;
             Scanner sc = new Scanner(fin);
             StringBuilder sb = new StringBuilder();
             while (sc.hasNextLine()) {
@@ -34,11 +34,17 @@ public class Messages {
             Pattern p = Pattern.compile("[{][^{]+[}]");
             Matcher m = p.matcher(sb);
             while (m.find()) {
-                messages.add(gson.fromJson(sb.substring(m.start(), m.end()), Message.class));
+                try {
+                    messages.add(gson.fromJson(sb.substring(m.start(), m.end()), Message.class));
+                    counter++;
+                } catch (JsonSyntaxException e) {
+                    log.add("Exeption ", e.toString());
+                }
             }
+            log.add("Information", counter + " read Messages");
         } catch (FileNotFoundException e) {
             System.out.println("FIle not found");
-
+            log.add("Exeption ", e.toString());
         }
     }
 
@@ -55,8 +61,10 @@ public class Messages {
 
             }
             ps.print("]");
+            log.add("Information ", messages.size() + " write Messages");
         } catch (FileNotFoundException e) {
             System.out.println("FIle not found");
+            log.add("Exeption", e.toString());
         }
     }
 
@@ -68,10 +76,12 @@ public class Messages {
                 break;
             }
         }
+        log.add("Information ", id + " del  Message by id");
     }
 
     public void addMessage(String author, String message) {
         messages.add(new Message(author, message));
+        log.add("Information ", " add Message");
     }
 
     private void oneMessagePrint(Message message) {
@@ -84,7 +94,7 @@ public class Messages {
         }
     }
 
-    public void printMessageHistory() {
+    public List<Message> getMessageHistory() {
         List<Message> copy = new ArrayList<>();
         copy.addAll(messages);
         Collections.sort(copy, new Comparator<Message>() {
@@ -93,35 +103,45 @@ public class Messages {
                 return (int) (o1.getTimestamp() - o2.getTimestamp());
             }
         });
-        for (Message message : copy) {
-            oneMessagePrint(message);
-        }
+        return copy;
     }
 
-    public void printMessageByAuthor(String author) {
+    public List<Message> getMessageByAuthor(String author) {
+        List<Message> temp = new ArrayList<>();
         for (Message message : messages) {
-            if (message.getAuthor().compareTo(author) == 0)
-                oneMessagePrint(message);
+            if (message.getAuthor().compareTo(author) == 0) {
+                temp.add(message);
+
+            }
         }
+        log.add("Information ", temp.size() + " Found posts by author: " + author);
+        return temp;
     }
 
-    public void printMessageByKeyWord(String KeyWord) {
+    public List<Message> getMessageByKeyWord(String keyWord) {
+        List<Message> temp = new ArrayList<>();
         for (Message message : messages) {
-            if (message.getMessage().indexOf(KeyWord) != -1)
-                oneMessagePrint(message);
+            if (message.getMessage().indexOf(keyWord) != -1)
+                temp.add(message);
         }
+        log.add("Information ", temp.size() + " Found posts by keyWord : " + keyWord);
+        return temp;
     }
 
-    public void printMessageByRegExKeyWord(String RegExKeyWord) {
-        Pattern p = Pattern.compile(RegExKeyWord);
+    public List<Message> getMessageByRegExKeyWord(String regExKeyWord) {
+        Pattern p = Pattern.compile(regExKeyWord);
+        List<Message> temp = new ArrayList<>();
         for (Message message : messages) {
             Matcher m = p.matcher(message.getMessage());
             if (m.find())
-                oneMessagePrint(message);
+                temp.add(message);
         }
+        log.add("Information ", temp.size() + " Found posts by ReExkeyWord : " + regExKeyWord);
+        return temp;
     }
 
-    public void printMessageByPeriod(String start, String end) {
+    public List<Message> getMessageByPeriod(String start, String end) {
+        List<Message> temp = new ArrayList<>();
         try {
             String[] parsedStart = start.split("[.]");
             String[] parsedEnd = end.split("[.]");
@@ -137,18 +157,28 @@ public class Messages {
             long startTimestamp = new GregorianCalendar(startYear, startMonth, startDay).getTimeInMillis();
             long endTimestamp = new GregorianCalendar(startYear, startMonth, startDay).getTimeInMillis();
             if (startTimestamp > endTimestamp) {
-                long temp = startTimestamp;
+                long ms = startTimestamp;
                 startTimestamp = endTimestamp;
-                endTimestamp = temp;
+                endTimestamp = ms;
             }
             for (Message message : messages) {
                 if (message.getTimestamp() > startTimestamp && message.getTimestamp() < endTimestamp)
-                    oneMessagePrint(message);
+                    temp.add(message);
             }
         } catch (NumberFormatException e) {
             System.out.println("bad data Format");
+            log.add("Exeption", "bad data Format");
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("bad data Format");
+            log.add("Exeption", "bad data Format");
+        }
+        log.add("Information ", temp.size() + " Found posts by time : " + start + " - " + end);
+        return temp;
+    }
+
+    public void printMessages(List<Message> m) {
+        for (Message mesage : m) {
+            oneMessagePrint(mesage);
         }
     }
 }
