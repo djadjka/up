@@ -1,11 +1,11 @@
 import java.util.GregorianCalendar;
 
-public class Day {
+public class CalendarDay {
     private int day;
     private int month;
     private int year;
 
-    public Day(String s) throws NumberFormatException, ArrayIndexOutOfBoundsException {
+    public CalendarDay(String s) throws NumberFormatException, ArrayIndexOutOfBoundsException {
         String[] parsed = s.split("[.]");
         day = Integer.parseInt(parsed[0]);
         month = Integer.parseInt(parsed[1]);

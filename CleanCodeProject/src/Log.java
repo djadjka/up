@@ -17,7 +17,7 @@ public class Log {
     }
 
     public void add(String view, String information) {
-        ps.println(calendar.getTime() + "  " + view + "  " + information);
+        ps.printf("%-30s %-10s %-140s%n", calendar.getTime().toString(), view, information);
     }
 
 

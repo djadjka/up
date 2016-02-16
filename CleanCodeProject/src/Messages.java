@@ -82,6 +82,8 @@ public class Messages {
 
     public void addMessage(String author, String message) {
         messages.add(new Message(author, message));
+        if (message.length() > 140)
+            log.add("Warning", "message text is too long");
         log.add("Information ", " add Message");
     }
 
@@ -138,12 +140,13 @@ public class Messages {
     public List<Message> getMessageByPeriod(String start, String end) {
         List<Message> temp = new ArrayList<>();
         try {
-            Day startDay = new Day(start);
-            Day endDay = new Day(end);
+            CalendarDay startCalendarDay = new CalendarDay(start);
+            CalendarDay endCalendarDay = new CalendarDay(end);
+            long mesTimestamp;
             for (Message message : messages) {
-                if (message.getTimestamp() > startDay.getTimestamp() && message.getTimestamp() < endDay.getTimestamp())
-                    ;
-                temp.add(message);
+                mesTimestamp = message.getTimestamp();
+                if ((mesTimestamp > startCalendarDay.getTimestamp()) && (mesTimestamp < endCalendarDay.getTimestamp()))
+                    temp.add(message);
             }
         } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
             System.out.println("bad data Format");

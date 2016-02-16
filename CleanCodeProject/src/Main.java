@@ -4,11 +4,10 @@ public class Main {
     public static void main(String[] args) {
 
         try {
-            ConsoleInterface ci = null;
-            ci = new ConsoleInterface();
-            ci.chooseComand();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            ConsoleInterface consoleInterface = new ConsoleInterface();
+            consoleInterface.chooseCommand();
+        } catch (java.io.FileNotFoundException e) {
+            System.out.println(e.toString());
         }
 
     }

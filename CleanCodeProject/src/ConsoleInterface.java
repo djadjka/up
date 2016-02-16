@@ -12,11 +12,11 @@ public class ConsoleInterface {
     public ConsoleInterface() throws FileNotFoundException {
         messages = new Messages();
         consoleSc = new Scanner(System.in);
-        interfaceSc = new Scanner(new File("intereText.txt"));
-        interfaceText = readInterfacetext();
+        interfaceSc = new Scanner(new File("interfaceText.txt"));
+        interfaceText = readInterfaceText();
     }
 
-    private String readInterfacetext() {
+    private String readInterfaceText() {
         StringBuilder sb = new StringBuilder();
         final int NUMBER_OF_PINTS = 10;
         for (int i = 0; i < NUMBER_OF_PINTS; i++) {
@@ -31,9 +31,7 @@ public class ConsoleInterface {
         System.out.println(interfaceText);
     }
 
-    public void chooseComand() {
-
-
+    public void chooseCommand() {
         while (true) {
             printInterface();
             try {
@@ -112,10 +110,9 @@ public class ConsoleInterface {
     }
 
     public void printMessageByPeriod() {
-        String text = "enter start period (dd.mm.yy)";
-        System.out.println(text);
+        System.out.println("enter start period (dd.mm.yy)");
         String start = consoleSc.next();
-        System.out.println(text);
+        System.out.println("enter end period (dd.mm.yy)");
         String end = consoleSc.next();
         messages.printMessages(messages.getMessageByPeriod(start, end));
     }
