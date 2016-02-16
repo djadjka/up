@@ -10,16 +10,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-
-
 public class Messages {
     private List<Message> messages;
-
     private Gson gson;
     private Log log;
-    final int DAY=0;
-    final int MONTH=1;
-    final int YEAR=2;
 
     public Messages() {
         this.messages = new ArrayList<>();
@@ -43,13 +37,14 @@ public class Messages {
                     messages.add(gson.fromJson(sb.substring(m.start(), m.end()), Message.class));
                     counter++;
                 } catch (JsonSyntaxException e) {
-                    log.add("Exeption ", e.toString());
+                    log.add("Exception ", e.toString());
                 }
             }
             log.add("Information", counter + " read Messages");
+            sc.close();
         } catch (FileNotFoundException e) {
             System.out.println("FIle not found");
-            log.add("Exeption ", e.toString());
+            log.add("Exception ", e.toString());
         }
     }
 
@@ -66,10 +61,11 @@ public class Messages {
 
             }
             ps.print("]");
+            ps.close();
             log.add("Information ", messages.size() + " write Messages");
         } catch (FileNotFoundException e) {
             System.out.println("FIle not found");
-            log.add("Exeption", e.toString());
+            log.add("Exception", e.toString());
         }
     }
 
@@ -91,12 +87,6 @@ public class Messages {
 
     private void oneMessagePrint(Message message) {
         System.out.println(message.getMessage());
-    }
-
-    public void printMessages() {
-        for (Message message : messages) {
-            oneMessagePrint(message);
-        }
     }
 
     public List<Message> getMessageHistory() {
@@ -126,7 +116,7 @@ public class Messages {
     public List<Message> getMessageByKeyWord(String keyWord) {
         List<Message> temp = new ArrayList<>();
         for (Message message : messages) {
-            if (message.getMessage().indexOf(keyWord) != -1)
+            if (message.getMessage().contains(keyWord))
                 temp.add(message);
         }
         log.add("Information ", temp.size() + " Found posts by keyWord : " + keyWord);
@@ -141,43 +131,31 @@ public class Messages {
             if (m.find())
                 temp.add(message);
         }
-        log.add("Information ", temp.size() + " Found posts by ReExkeyWord : " + regExKeyWord);
+        log.add("Information ", temp.size() + " Found posts by RegExKeyWord : " + regExKeyWord);
         return temp;
     }
 
     public List<Message> getMessageByPeriod(String start, String end) {
         List<Message> temp = new ArrayList<>();
         try {
-            String[] parsedStart = start.split("[.]");
-            String[] parsedEnd = end.split("[.]");
-            int startDay = Integer.parseInt(parsedStart[DAY]);
-            int startMonth = Integer.parseInt(parsedStart[MONTH]);
-            int startYear = Integer.parseInt(parsedStart[YEAR]);
-            int endDay = Integer.parseInt(parsedEnd[DAY]);
-            int endMonth = Integer.parseInt(parsedEnd[MONTH]);
-            int endYear = Integer.parseInt(parsedEnd[YEAR]);
-            long startTimestamp = new GregorianCalendar(startYear, startMonth, startDay).getTimeInMillis();
-            long endTimestamp = new GregorianCalendar(startYear, startMonth, startDay).getTimeInMillis();
-            if (startTimestamp > endTimestamp) {
-                long ms = startTimestamp;
-                startTimestamp = endTimestamp;
-                endTimestamp = ms;
-            }
+            Day startDay = new Day(start);
+            Day endDay = new Day(end);
             for (Message message : messages) {
-                if (message.getTimestamp() > startTimestamp && message.getTimestamp() < endTimestamp)
-                    temp.add(message);
+                if (message.getTimestamp() > startDay.getTimestamp() && message.getTimestamp() < endDay.getTimestamp())
+                    ;
+                temp.add(message);
             }
-        }catch (NumberFormatException|ArrayIndexOutOfBoundsException e) {
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
             System.out.println("bad data Format");
-            log.add("Exeption", "bad data Format");
+            log.add("Exception", "bad data Format");
         }
         log.add("Information ", temp.size() + " Found posts by time : " + start + " - " + end);
         return temp;
     }
 
     public void printMessages(List<Message> m) {
-        for (Message mesage : m) {
-            oneMessagePrint(mesage);
+        for (Message message : m) {
+            oneMessagePrint(message);
         }
     }
 }

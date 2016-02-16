@@ -8,16 +8,16 @@ public class Message {
     private String message;
 
     public Message(String message, String author, String id, long timestamp) {
-        this.id = new String(id);
-        this.message = new String(message);
-        this.author = new String(author);
+        this.id = id;
+        this.message = message;
+        this.author = author;
         this.timestamp = timestamp;
     }
 
     public Message(String author, String message) {
-        this.id = new String(generateId());
-        this.message = new String(message);
-        this.author = new String(author);
+        this.id = generateId();
+        this.message = message;
+        this.author = author;
         this.timestamp = generateTimestamp();
     }
 

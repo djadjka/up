@@ -17,7 +17,7 @@ public class Log {
     }
 
     public void add(String view, String information) {
-        ps.println(calendar.getTime()+"  "+ view + "  " + information);
+        ps.println(calendar.getTime() + "  " + view + "  " + information);
     }
 
 

@@ -1,27 +1,34 @@
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 
 public class ConsoleInterface {
     private Messages messages;
-    private Scanner sc;
+    private Scanner consoleSc;
+    private Scanner interfaceSc;
+    private String interfaceText;
 
-    public ConsoleInterface() {
+    public ConsoleInterface() throws FileNotFoundException {
         messages = new Messages();
-        sc = new Scanner(System.in);
+        consoleSc = new Scanner(System.in);
+        interfaceSc = new Scanner(new File("intereText.txt"));
+        interfaceText = readInterfacetext();
+    }
+
+    private String readInterfacetext() {
+        StringBuilder sb = new StringBuilder();
+        final int NUMBER_OF_PINTS = 10;
+        for (int i = 0; i < NUMBER_OF_PINTS; i++) {
+            sb.append(interfaceSc.nextLine());
+            sb.append("\r\n");
+        }
+        return sb.toString();
     }
 
     public void printInterface() {
-        System.out.println("1)read from a file");
-        System.out.println("2)write from a file");
-        System.out.println("3)add message");
-        System.out.println("4)view the history of messages in chronological order");
-        System.out.println("5)delete the message by ID");
-        System.out.println("6)search in the history of posts by author");
-        System.out.println("7)search in the history of posts by keyword");
-        System.out.println("8)search in the history of posts by a regular expression");
-        System.out.println("9)view message history for a certain period");
-        System.out.println("0)exit");
+
+        System.out.println(interfaceText);
     }
 
     public void chooseComand() {
@@ -30,7 +37,7 @@ public class ConsoleInterface {
         while (true) {
             printInterface();
             try {
-                switch (Integer.parseInt(sc.next())) {
+                switch (Integer.parseInt(consoleSc.next())) {
                     case 1:
                         readMessages();
                         break;
@@ -64,34 +71,34 @@ public class ConsoleInterface {
                         break;
                 }
             } catch (NumberFormatException e) {
-                System.out.println("error");
+                System.out.println(e.toString());
             }
         }
     }
 
     private void readMessages() {
         System.out.println("enter the path to the file");
-        sc.skip("[\r\n]+");
-        messages.readMessages(new File(sc.nextLine()));
+        consoleSc.skip("[\r\n]+");
+        messages.readMessages(new File(consoleSc.nextLine()));
     }
 
     private void writeMessages() {
         System.out.println("enter the path to the file");
-        sc.skip("[\r\n]+");
-        messages.writeMessages(new File(sc.nextLine()));
+        consoleSc.skip("[\r\n]+");
+        messages.writeMessages(new File(consoleSc.nextLine()));
     }
 
     private void delMessages() {
         System.out.println("enter ID");
-        messages.delMessage(sc.next());
+        messages.delMessage(consoleSc.next());
     }
 
     private void addMessage() {
         System.out.println("enter your user name");
-        String userName = sc.next();
+        String userName = consoleSc.next();
         System.out.println("enter your user message");
-        sc.skip("[\r\n]+");
-        String message = sc.nextLine();
+        consoleSc.skip("[\r\n]+");
+        String message = consoleSc.nextLine();
         messages.addMessage(userName, message);
     }
 
@@ -101,27 +108,28 @@ public class ConsoleInterface {
 
     public void printMessageByAuthor() {
         System.out.println("enter user name");
-            messages.printMessages(messages.getMessageByAuthor(sc.next()));
-        }
+        messages.printMessages(messages.getMessageByAuthor(consoleSc.next()));
+    }
 
     public void printMessageByPeriod() {
-        System.out.println("enter start period (dd.mm.yy)");
-        String start = sc.next();
-        System.out.println("enter end period (dd.mm.yy)");
-        String end = sc.next();
+        String text = "enter start period (dd.mm.yy)";
+        System.out.println(text);
+        String start = consoleSc.next();
+        System.out.println(text);
+        String end = consoleSc.next();
         messages.printMessages(messages.getMessageByPeriod(start, end));
     }
 
     public void printMessageByRegExKeyWord() {
         System.out.println("enter regex");
-        sc.skip("[\r\n]+");
-        messages.printMessages(messages.getMessageByRegExKeyWord(sc.nextLine()));
+        consoleSc.skip("[\r\n]+");
+        messages.printMessages(messages.getMessageByRegExKeyWord(consoleSc.nextLine()));
     }
 
     public void printMessageByKeyWord() {
         System.out.println("enter key word");
-        sc.skip("[\r\n]+");
-        messages.printMessages(messages.getMessageByKeyWord(sc.nextLine()));
+        consoleSc.skip("[\r\n]+");
+        messages.printMessages(messages.getMessageByKeyWord(consoleSc.nextLine()));
     }
 
 }
