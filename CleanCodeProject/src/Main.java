@@ -6,7 +6,7 @@ public class Main {
         try {
             ConsoleInterface consoleInterface = new ConsoleInterface();
             consoleInterface.chooseCommand();
-        } catch (java.io.FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             System.out.println(e.toString());
         }
 

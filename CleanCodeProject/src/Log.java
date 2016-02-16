@@ -16,8 +16,14 @@ public class Log {
         }
     }
 
-    public void add(String view, String information) {
-        ps.printf("%-30s %-10s %-140s%n", calendar.getTime().toString(), view, information);
+    public void addException(String information) {
+        ps.printf("%-30s %-10s %-140s%n", calendar.getTime().toString(), "Exception", information);
+    }
+    public void addInformation(String information) {
+        ps.printf("%-30s %-10s %-140s%n", calendar.getTime().toString(), "Information", information);
+    }
+    public void addWarning(String information) {
+        ps.printf("%-30s %-10s %-140s%n", calendar.getTime().toString(), "Warning", information);
     }
 
 

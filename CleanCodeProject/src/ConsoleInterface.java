@@ -27,7 +27,7 @@ public class ConsoleInterface {
     }
 
     public void printInterface() {
-
+        System.out.println();
         System.out.println(interfaceText);
     }
 
@@ -110,9 +110,9 @@ public class ConsoleInterface {
     }
 
     public void printMessageByPeriod() {
-        System.out.println("enter start period (dd.mm.yy)");
+        System.out.println("enter start period (dd.mm.yyyy)");
         String start = consoleSc.next();
-        System.out.println("enter end period (dd.mm.yy)");
+        System.out.println("enter end period (dd.mm.yyyy)");
         String end = consoleSc.next();
         messages.printMessages(messages.getMessageByPeriod(start, end));
     }

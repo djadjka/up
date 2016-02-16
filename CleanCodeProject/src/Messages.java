@@ -37,14 +37,14 @@ public class Messages {
                     messages.add(gson.fromJson(sb.substring(m.start(), m.end()), Message.class));
                     counter++;
                 } catch (JsonSyntaxException e) {
-                    log.add("Exception ", e.toString());
+                    log.addException( e.toString());
                 }
             }
-            log.add("Information", counter + " read Messages");
+            log.addInformation( counter + " read Messages");
             sc.close();
         } catch (FileNotFoundException e) {
             System.out.println("FIle not found");
-            log.add("Exception ", e.toString());
+            log.addException( e.toString());
         }
     }
 
@@ -62,10 +62,10 @@ public class Messages {
             }
             ps.print("]");
             ps.close();
-            log.add("Information ", messages.size() + " write Messages");
+            log.addInformation( messages.size() + " write Messages");
         } catch (FileNotFoundException e) {
             System.out.println("FIle not found");
-            log.add("Exception", e.toString());
+            log.addException( e.toString());
         }
     }
 
@@ -77,14 +77,14 @@ public class Messages {
                 break;
             }
         }
-        log.add("Information ", id + " del  Message by id");
+        log.addInformation(id + " del  Message by id");
     }
 
     public void addMessage(String author, String message) {
         messages.add(new Message(author, message));
         if (message.length() > 140)
-            log.add("Warning", "message text is too long");
-        log.add("Information ", " add Message");
+            log.addWarning( "message text is too long");
+        log.addInformation( " add Message");
     }
 
     private void oneMessagePrint(Message message) {
@@ -106,34 +106,33 @@ public class Messages {
     public List<Message> getMessageByAuthor(String author) {
         List<Message> temp = new ArrayList<>();
         for (Message message : messages) {
-            if (message.getAuthor().compareTo(author) == 0) {
+            if (message.getAuthor().trim().compareTo(author.trim()) == 0) {
                 temp.add(message);
-
             }
         }
-        log.add("Information ", temp.size() + " Found posts by author: " + author);
+        log.addInformation( temp.size() + " Found posts by author: " + author);
         return temp;
     }
 
     public List<Message> getMessageByKeyWord(String keyWord) {
         List<Message> temp = new ArrayList<>();
         for (Message message : messages) {
-            if (message.getMessage().contains(keyWord))
+            if (message.getMessage().contains(keyWord.trim()))
                 temp.add(message);
         }
-        log.add("Information ", temp.size() + " Found posts by keyWord : " + keyWord);
+        log.addInformation( temp.size() + " Found posts by keyWord : " + keyWord);
         return temp;
     }
 
     public List<Message> getMessageByRegExKeyWord(String regExKeyWord) {
-        Pattern p = Pattern.compile(regExKeyWord);
+        Pattern p = Pattern.compile(regExKeyWord.trim());
         List<Message> temp = new ArrayList<>();
         for (Message message : messages) {
             Matcher m = p.matcher(message.getMessage());
             if (m.find())
                 temp.add(message);
         }
-        log.add("Information ", temp.size() + " Found posts by RegExKeyWord : " + regExKeyWord);
+        log.addInformation( temp.size() + " Found posts by RegExKeyWord : " + regExKeyWord);
         return temp;
     }
 
@@ -150,9 +149,9 @@ public class Messages {
             }
         } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
             System.out.println("bad data Format");
-            log.add("Exception", "bad data Format");
+            log.addException( "bad data Format");
         }
-        log.add("Information ", temp.size() + " Found posts by time : " + start + " - " + end);
+        log.addInformation( temp.size() + " Found posts by time : " + start + " - " + end);
         return temp;
     }
 
