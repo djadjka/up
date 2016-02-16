@@ -3,9 +3,6 @@ import java.io.PrintStream;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-/**
- * Created by djadjka_by on 13.02.2016.
- */
 public class Log {
     private Calendar calendar;
     private PrintStream ps;

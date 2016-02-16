@@ -1,13 +1,15 @@
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.*;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+
 
 
 public class Messages {
@@ -15,6 +17,9 @@ public class Messages {
 
     private Gson gson;
     private Log log;
+    final int DAY=0;
+    final int MONTH=1;
+    final int YEAR=2;
 
     public Messages() {
         this.messages = new ArrayList<>();
@@ -52,11 +57,11 @@ public class Messages {
         try {
             PrintStream ps = new PrintStream(fout);
             ps.print("[");
-            int flag = 0;
+            int counter = 0;
             for (Message message : messages) {
                 ps.print(gson.toJson(message));
-                flag++;
-                if (flag < messages.size())
+                counter++;
+                if (counter < messages.size())
                     ps.print(",");
 
             }
@@ -145,14 +150,11 @@ public class Messages {
         try {
             String[] parsedStart = start.split("[.]");
             String[] parsedEnd = end.split("[.]");
-            int DAY = 0;
-            int Month = 1;
-            int YEAR = 2;
             int startDay = Integer.parseInt(parsedStart[DAY]);
-            int startMonth = Integer.parseInt(parsedStart[Month]);
+            int startMonth = Integer.parseInt(parsedStart[MONTH]);
             int startYear = Integer.parseInt(parsedStart[YEAR]);
             int endDay = Integer.parseInt(parsedEnd[DAY]);
-            int endMonth = Integer.parseInt(parsedEnd[Month]);
+            int endMonth = Integer.parseInt(parsedEnd[MONTH]);
             int endYear = Integer.parseInt(parsedEnd[YEAR]);
             long startTimestamp = new GregorianCalendar(startYear, startMonth, startDay).getTimeInMillis();
             long endTimestamp = new GregorianCalendar(startYear, startMonth, startDay).getTimeInMillis();
@@ -165,10 +167,7 @@ public class Messages {
                 if (message.getTimestamp() > startTimestamp && message.getTimestamp() < endTimestamp)
                     temp.add(message);
             }
-        } catch (NumberFormatException e) {
-            System.out.println("bad data Format");
-            log.add("Exeption", "bad data Format");
-        } catch (ArrayIndexOutOfBoundsException e) {
+        }catch (NumberFormatException|ArrayIndexOutOfBoundsException e) {
             System.out.println("bad data Format");
             log.add("Exeption", "bad data Format");
         }

@@ -1,12 +1,7 @@
-
-
 import java.io.File;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
-/**
- * Created by djadjka_by on 12.02.2016.
- */
+
 public class ConsoleInterface {
     private Messages messages;
     private Scanner sc;
