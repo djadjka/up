@@ -6,6 +6,7 @@ import java.util.GregorianCalendar;
 public class Log {
     private Calendar calendar;
     private PrintStream ps;
+    private final String DESIGN_OUTPUT = "%-30s %-10s %-140s%n";
 
     public Log(String path) {
         calendar = new GregorianCalendar();
@@ -17,13 +18,15 @@ public class Log {
     }
 
     public void addException(String information) {
-        ps.printf("%-30s %-10s %-140s%n", calendar.getTime().toString(), "Exception", information);
+        ps.printf(DESIGN_OUTPUT, calendar.getTime().toString(), "Exception", information);
     }
+
     public void addInformation(String information) {
-        ps.printf("%-30s %-10s %-140s%n", calendar.getTime().toString(), "Information", information);
+        ps.printf(DESIGN_OUTPUT, calendar.getTime().toString(), "Information", information);
     }
+
     public void addWarning(String information) {
-        ps.printf("%-30s %-10s %-140s%n", calendar.getTime().toString(), "Warning", information);
+        ps.printf(DESIGN_OUTPUT, calendar.getTime().toString(), "Warning", information);
     }
 
 

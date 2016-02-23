@@ -13,12 +13,9 @@ import java.util.regex.Pattern;
 public class Messages {
     private List<Message> messages;
     private Gson gson;
-    private Log log;
-
     public Messages() {
         this.messages = new ArrayList<>();
         this.gson = new GsonBuilder().create();
-        log = new Log("logfile.txt");
     }
 
 
@@ -37,14 +34,14 @@ public class Messages {
                     messages.add(gson.fromJson(sb.substring(m.start(), m.end()), Message.class));
                     counter++;
                 } catch (JsonSyntaxException e) {
-                    log.addException( e.toString());
+                    Main.log.addException(e.toString());
                 }
             }
-            log.addInformation( counter + " read Messages");
+            Main.log.addInformation(counter + " read Messages");
             sc.close();
         } catch (FileNotFoundException e) {
-            System.out.println("FIle not found");
-            log.addException( e.toString());
+            System.out.println(e.toString());
+            Main.log.addException(e.toString());
         }
     }
 
@@ -57,15 +54,15 @@ public class Messages {
                 ps.print(gson.toJson(message));
                 counter++;
                 if (counter < messages.size())
-                    ps.print(",");
+                    ps.println(",");
 
             }
             ps.print("]");
             ps.close();
-            log.addInformation( messages.size() + " write Messages");
+            Main.log.addInformation(messages.size() + " write Messages");
         } catch (FileNotFoundException e) {
-            System.out.println("FIle not found");
-            log.addException( e.toString());
+            System.out.println(e.toString());
+            Main.log.addException(e.toString());
         }
     }
 
@@ -77,14 +74,14 @@ public class Messages {
                 break;
             }
         }
-        log.addInformation(id + " del  Message by id");
+        Main.log.addInformation(id + " del  Message by id");
     }
 
     public void addMessage(String author, String message) {
         messages.add(new Message(author, message));
         if (message.length() > 140)
-            log.addWarning( "message text is too long");
-        log.addInformation( " add Message");
+            Main.log.addWarning("message text is too long");
+        Main.log.addInformation(" add Message");
     }
 
     private void oneMessagePrint(Message message) {
@@ -110,7 +107,7 @@ public class Messages {
                 temp.add(message);
             }
         }
-        log.addInformation( temp.size() + " Found posts by author: " + author);
+        Main.log.addInformation(temp.size() + " Found posts by author: " + author);
         return temp;
     }
 
@@ -120,7 +117,7 @@ public class Messages {
             if (message.getMessage().contains(keyWord.trim()))
                 temp.add(message);
         }
-        log.addInformation( temp.size() + " Found posts by keyWord : " + keyWord);
+        Main.log.addInformation(temp.size() + " Found posts by keyWord : " + keyWord);
         return temp;
     }
 
@@ -132,26 +129,26 @@ public class Messages {
             if (m.find())
                 temp.add(message);
         }
-        log.addInformation( temp.size() + " Found posts by RegExKeyWord : " + regExKeyWord);
+        Main.log.addInformation(temp.size() + " Found posts by RegExKeyWord : " + regExKeyWord);
         return temp;
     }
 
     public List<Message> getMessageByPeriod(String start, String end) {
         List<Message> temp = new ArrayList<>();
         try {
-            CalendarDay startCalendarDay = new CalendarDay(start);
-            CalendarDay endCalendarDay = new CalendarDay(end);
+            long startCalendarDay = CalendarDay.getTimestamp(start);
+            long endCalendarDay = CalendarDay.getTimestamp(end);
             long mesTimestamp;
             for (Message message : messages) {
                 mesTimestamp = message.getTimestamp();
-                if ((mesTimestamp > startCalendarDay.getTimestamp()) && (mesTimestamp < endCalendarDay.getTimestamp()))
+                if ((mesTimestamp > startCalendarDay) && (mesTimestamp < endCalendarDay))
                     temp.add(message);
             }
         } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
             System.out.println("bad data Format");
-            log.addException( "bad data Format");
+            Main.log.addException("bad data Format");
         }
-        log.addInformation( temp.size() + " Found posts by time : " + start + " - " + end);
+        Main.log.addInformation(temp.size() + " Found posts by time : " + start + " - " + end);
         return temp;
     }
 
