@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
 public class Messages {
     private List<Message> messages;
     private Gson gson;
+
     public Messages() {
         this.messages = new ArrayList<>();
         this.gson = new GsonBuilder().create();
@@ -20,49 +21,46 @@ public class Messages {
 
 
     public void readMessages(File fin) {
-        try {
+        try (Scanner sc = new Scanner(fin)) {
             int counter = 0;
-            Scanner sc = new Scanner(fin);
+            final String REGEX = "[{][^{]+[}]";
             StringBuilder sb = new StringBuilder();
             while (sc.hasNextLine()) {
                 sb.append(sc.nextLine());
             }
-            Pattern p = Pattern.compile("[{][^{]+[}]");
+            Pattern p = Pattern.compile(REGEX);
             Matcher m = p.matcher(sb);
             while (m.find()) {
                 try {
                     messages.add(gson.fromJson(sb.substring(m.start(), m.end()), Message.class));
                     counter++;
                 } catch (JsonSyntaxException e) {
-                    Main.log.addException(e.toString());
+                    Log.getInstance().addException(e.toString());
                 }
             }
-            Main.log.addInformation(counter + " read Messages");
-            sc.close();
+            Log.getInstance().addInformation(counter + " read Messages");
         } catch (FileNotFoundException e) {
             System.out.println(e.toString());
-            Main.log.addException(e.toString());
+            Log.getInstance().addException(e.toString());
         }
     }
 
     public void writeMessages(File fout) {
-        try {
-            PrintStream ps = new PrintStream(fout);
+        try (PrintStream ps = new PrintStream(fout)) {
             ps.print("[");
             int counter = 0;
             for (Message message : messages) {
                 ps.print(gson.toJson(message));
                 counter++;
-                if (counter < messages.size())
+                if (counter < messages.size()) {
                     ps.println(",");
-
+                }
             }
             ps.print("]");
-            ps.close();
-            Main.log.addInformation(messages.size() + " write Messages");
+            Log.getInstance().addInformation(messages.size() + " write Messages");
         } catch (FileNotFoundException e) {
             System.out.println(e.toString());
-            Main.log.addException(e.toString());
+            Log.getInstance().addException(e.toString());
         }
     }
 
@@ -74,14 +72,16 @@ public class Messages {
                 break;
             }
         }
-        Main.log.addInformation(id + " del  Message by id");
+        Log.getInstance().addInformation(id + " del  Message by id");
     }
 
     public void addMessage(String author, String message) {
+        final int RECOMENDE_SIZE_MESSAGE = 140;
         messages.add(new Message(author, message));
-        if (message.length() > 140)
-            Main.log.addWarning("message text is too long");
-        Main.log.addInformation(" add Message");
+        if (message.length() > RECOMENDE_SIZE_MESSAGE) {
+            Log.getInstance().addWarning("message text is too long");
+        }
+        Log.getInstance().addInformation(" add Message");
     }
 
     private void oneMessagePrint(Message message) {
@@ -91,12 +91,7 @@ public class Messages {
     public List<Message> getMessageHistory() {
         List<Message> copy = new ArrayList<>();
         copy.addAll(messages);
-        Collections.sort(copy, new Comparator<Message>() {
-            @Override
-            public int compare(Message o1, Message o2) {
-                return (int) (o1.getTimestamp() - o2.getTimestamp());
-            }
-        });
+        Collections.sort(copy);
         return copy;
     }
 
@@ -107,17 +102,18 @@ public class Messages {
                 temp.add(message);
             }
         }
-        Main.log.addInformation(temp.size() + " Found posts by author: " + author);
+        Log.getInstance().addInformation(temp.size() + " Found posts by author: " + author);
         return temp;
     }
 
     public List<Message> getMessageByKeyWord(String keyWord) {
         List<Message> temp = new ArrayList<>();
         for (Message message : messages) {
-            if (message.getMessage().contains(keyWord.trim()))
+            if (message.getMessage().contains(keyWord.trim())) {
                 temp.add(message);
+            }
         }
-        Main.log.addInformation(temp.size() + " Found posts by keyWord : " + keyWord);
+        Log.getInstance().addInformation(temp.size() + " Found posts by keyWord : " + keyWord);
         return temp;
     }
 
@@ -126,10 +122,11 @@ public class Messages {
         List<Message> temp = new ArrayList<>();
         for (Message message : messages) {
             Matcher m = p.matcher(message.getMessage());
-            if (m.find())
+            if (m.find()) {
                 temp.add(message);
+            }
         }
-        Main.log.addInformation(temp.size() + " Found posts by RegExKeyWord : " + regExKeyWord);
+        Log.getInstance().addInformation(temp.size() + " Found posts by RegExKeyWord : " + regExKeyWord);
         return temp;
     }
 
@@ -141,14 +138,15 @@ public class Messages {
             long mesTimestamp;
             for (Message message : messages) {
                 mesTimestamp = message.getTimestamp();
-                if ((mesTimestamp > startCalendarDay) && (mesTimestamp < endCalendarDay))
+                if ((mesTimestamp > startCalendarDay) && (mesTimestamp < endCalendarDay)) {
                     temp.add(message);
+                }
             }
         } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
             System.out.println("bad data Format");
-            Main.log.addException("bad data Format");
+            Log.getInstance().addException(e.toString() + "bad data Format");
         }
-        Main.log.addInformation(temp.size() + " Found posts by time : " + start + " - " + end);
+        Log.getInstance().addInformation(temp.size() + " Found posts by time : " + start + " - " + end);
         return temp;
     }
 

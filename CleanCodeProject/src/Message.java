@@ -1,7 +1,7 @@
 import java.util.Date;
 import java.util.UUID;
 
-public class Message {
+public class Message implements Comparable<Message> {
     private String id;
     private String author;
     private long timestamp;
@@ -46,5 +46,12 @@ public class Message {
 
     public long getTimestamp() {
         return timestamp;
+    }
+
+
+
+    @Override
+    public int compareTo(Message o) {
+        return (int) (this.getTimestamp() - o.getTimestamp());
     }
 }

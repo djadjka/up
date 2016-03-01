@@ -8,6 +8,7 @@ public class ConsoleUI {
     private Scanner consoleSc;
     private String textUI;
     private final String ENTER_PATH = "enter the path to the file";
+    final String SKIP_R_N = "[\r\n]+";
 
     public ConsoleUI() throws FileNotFoundException {
         messages = new Messages();
@@ -30,6 +31,11 @@ public class ConsoleUI {
     public void printInterface() {
         System.out.println();
         System.out.println(textUI);
+    }
+
+    private void printAndMoveRow(String text) {
+        System.out.println(text);
+        consoleSc.skip(SKIP_R_N);
     }
 
     public void chooseCommand() {
@@ -71,21 +77,19 @@ public class ConsoleUI {
                 }
             } catch (NumberFormatException e) {
                 System.out.println(e.toString());
-                Main.log.addException(e.toString());
+                Log.getInstance().addException(e.toString());
             }
         }
     }
 
     private void readMessages() {
-        System.out.println(ENTER_PATH);
-        consoleSc.skip("[\r\n]+");
+        printAndMoveRow(ENTER_PATH);
         messages.readMessages(new File(consoleSc.nextLine()));
     }
 
     private void writeMessages() {
 
-        System.out.println(ENTER_PATH);
-        consoleSc.skip("[\r\n]+");
+        printAndMoveRow(ENTER_PATH);
         messages.writeMessages(new File(consoleSc.nextLine()));
     }
 
@@ -97,8 +101,7 @@ public class ConsoleUI {
     private void addMessage() {
         System.out.println("enter your user name");
         String userName = consoleSc.next();
-        System.out.println("enter your user message");
-        consoleSc.skip("[\r\n]+");
+        printAndMoveRow("enter your user message");
         String message = consoleSc.nextLine();
         messages.addMessage(userName, message);
     }
@@ -121,14 +124,12 @@ public class ConsoleUI {
     }
 
     public void printMessageByRegExKeyWord() {
-        System.out.println("enter regex");
-        consoleSc.skip("[\r\n]+");
+        printAndMoveRow("enter regex");
         messages.printMessages(messages.getMessageByRegExKeyWord(consoleSc.nextLine()));
     }
 
     public void printMessageByKeyWord() {
-        System.out.println("enter key word");
-        consoleSc.skip("[\r\n]+");
+        printAndMoveRow("enter key word");
         messages.printMessages(messages.getMessageByKeyWord(consoleSc.nextLine()));
     }
 
