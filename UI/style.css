@@ -34,26 +34,26 @@
     overflow: hidden;
 }
 
-.rightCals {
+.rightColumn {
     width: 10%;
     height: auto;
     float: left;
     text-align: right;
 }
 
-.rightCals button {
+.rightColumn button {
     background-color: #FFC107;
     border: none;
 }
 
-.centerCals {
+.centerColumn {
     width: 75%;
     float: left;
     text-align: left;
     height: auto;
 }
 
-.leftCals {
+.leftColumn {
     width: 15%;
     float: left;
     height: auto;
