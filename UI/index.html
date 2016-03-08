@@ -4,16 +4,15 @@
     <meta charset="utf-8">
     <title>Чат</title>
     <link href="style.css" rel="stylesheet">
+    <script src="scripts.js"></script>
 </head>
-<body>
+<body onload="run();">
 <div class="error" align="center">Error</div>
 <h1 align="center">My chat</h1>
 <div class="container">
     <div class="allUsers">
         <input class="userName" type="text" placeholder="User">
-        <div>
-            <button class="selectPhoto">select photo</button>
-        </div>
+        <input class="selectPhoto" type="text" placeholder="Photo url">
         <div class="user"><img src="http://jamtaba-music-web-site.appspot.com/img/Tux-icon.png"> Tux</div>
         <div class="user"><img
                 src="http://doc.qt.io/qt-5/images/used-in-examples/widgets/icons/images/monkey_off_32x32.png">Monkey
@@ -99,161 +98,17 @@
     </div>
     <div class="chat">
         <div class="messages">
-            <div class="message">
-                <div class="leftColumn">
-                    <img src="http://jamtaba-music-web-site.appspot.com/img/Tux-icon.png">
-                </div>
-                <div class="centerColumn">
-                    <div>Tux</div>
-                    <div>hifsdfsdfsdfsdfsdfsdfsdfsdfsdfsssssssssssssssssssssssssssssssssssssssfdsfsdfsdfsdf
-                        sdfsdfsdfsdfsdfsdfsdfsdf
-                        sfsdfsdfsdfsd
-                        dsfsdfsd
-                    </div>
-                </div>
-                <div class="rightColumn">
 
-                    <div><img
-                            src="http://music.privet.ru/img/pics/edit-message-16x16.gif"></div>
-                </div>
-            </div>
-            <div class="myMessage">
-                <div class="leftColumn">
-                    <img src="http://doc.qt.io/qt-5/images/used-in-examples/widgets/icons/images/monkey_off_32x32.png">
-                </div>
-                <div class="centerColumn">
-                    <div>Monkey</div>
-                    <div>hi
-                    </div>
-                </div>
-                <div class="rightColumn">
-                    <div>
-                        <button><img
-                                src="http://s1.iconbird.com/ico/1212/264/w16h161355246842delete6.png"></button>
-                    </div>
-
-                    <div>
-                        <button><img
-                                src="http://music.privet.ru/img/pics/edit-message-16x16.gif"></button>
-                    </div>
-                </div>
-            </div>
-            <div class="message">
-                <div class="leftColumn">
-                    <img src="http://jamtaba-music-web-site.appspot.com/img/Tux-icon.png">
-                </div>
-                <div class="centerColumn">
-                    <div>Tux</div>
-                    <div>hi
-                    </div>
-                </div>
-                <div class="rightColumn">
-                    <img
-                            src="http://music.privet.ru/img/pics/edit-message-16x16.gif">
-                </div>
-
-
-            </div>
-            <div class="myMessage">
-                <div class="leftColumn">
-                    <img src="http://doc.qt.io/qt-5/images/used-in-examples/widgets/icons/images/monkey_off_32x32.png">
-                </div>
-                <div class="centerColumn">
-                    <div>Monkey</div>
-                    <div>hi
-                    </div>
-                </div>
-                <div class="rightColumn">
-                    <div>
-                        <button><img
-                                src="http://s1.iconbird.com/ico/1212/264/w16h161355246842delete6.png"></button>
-                    </div>
-
-                    <div>
-                        <button><img
-                                src="http://music.privet.ru/img/pics/edit-message-16x16.gif"></button>
-                    </div>
-                </div>
-            </div>
-            <div class="message">
-                <div class="leftColumn">
-                    <img src="http://jamtaba-music-web-site.appspot.com/img/Tux-icon.png">
-                </div>
-                <div class="centerColumn">
-                    <div>Tux</div>
-                    <div>
-                    </div>
-                </div>
-                <div class="rightColumn">
-
-                </div>
-            </div>
-            <div class="myMessage">
-                <div class="leftColumn">
-                    <img src="http://doc.qt.io/qt-5/images/used-in-examples/widgets/icons/images/monkey_off_32x32.png">
-                </div>
-                <div class="centerColumn">
-                    <div>Monkey</div>
-                    <div>hi
-                    </div>
-                </div>
-                <div class="rightColumn">
-                    <div>
-                        <button><img
-                                src="http://s1.iconbird.com/ico/1212/264/w16h161355246842delete6.png"></button>
-                    </div>
-
-                    <div>
-                        <button><img
-                                src="http://music.privet.ru/img/pics/edit-message-16x16.gif"></button>
-                    </div>
-                </div>
-            </div>
-            <div class="message">
-                <div class="leftColumn">
-                    <img src="http://jamtaba-music-web-site.appspot.com/img/Tux-icon.png">
-                </div>
-                <div class="centerColumn">
-                    <div>Tux</div>
-                    <div>
-                    </div>
-                </div>
-                <div class="rightColumn">
-                    <img
-                            src="http://s1.iconbird.com/ico/1212/264/w16h161355246842delete6.png">
-                </div>
-            </div>
-            <div class="myMessage">
-                <div class="leftColumn">
-                    <img src="http://doc.qt.io/qt-5/images/used-in-examples/widgets/icons/images/monkey_off_32x32.png">
-                </div>
-                <div class="centerColumn">
-                    <div>Monkey</div>
-                    <div>hi
-                    </div>
-                </div>
-                <div class="rightColumn">
-                    <div>
-                        <button><img
-                                src="http://s1.iconbird.com/ico/1212/264/w16h161355246842delete6.png"></button>
-                    </div>
-
-                    <div>
-                        <button><img
-                                src="http://music.privet.ru/img/pics/edit-message-16x16.gif"></button>
-                    </div>
-                </div>
-            </div>
         </div>
-        <div class="lowerBlock">
-<textarea class="entryField">
-            </textarea>
-            <button>Send</button>
+        <div class="lowerBlock"><textarea class="entryField"></textarea>
+            <button class="inputButton">Send</button>
         </div>
     </div>
 </div>
 <footer style="text-align: right">
-    Дядюк Алексей
+    <br>
+    <br>
+    Дядюк Алексей 2016
 </footer>
 </body>
 </html>

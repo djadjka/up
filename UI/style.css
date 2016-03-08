@@ -22,7 +22,6 @@
 
 .myMessage {
     background-color: #FFC107;
-    word-wrap: break-word;
     height: auto;
     overflow: hidden;
 }
@@ -30,7 +29,6 @@
 .message {
     height: auto;
     background-color: #8BC34A;
-    word-wrap: break-word;
     overflow: hidden;
 }
 
@@ -42,7 +40,17 @@
 }
 
 .rightColumn button {
-    background-color: #FFC107;
+    background-color: inherit;
+    border: none;
+}
+
+.delButton {
+    background-color: inherit;
+    border: none;
+}
+
+.changeButton {
+    background-color: inherit;
     border: none;
 }
 
@@ -51,6 +59,7 @@
     float: left;
     text-align: left;
     height: auto;
+    word-wrap: break-word;
 }
 
 .leftColumn {
@@ -62,7 +71,7 @@
 .lowerBlock {
     background-color: #4ECDC4;
     height: 10%;
-    text-align: center;
+    vertical-align: middle;
 }
 
 .entryField {
@@ -71,10 +80,9 @@
     float: left;
     margin: 2%;
     resize: none;
-    text-indent: 0;
 }
 
-.lowerBlock button {
+.inputButton {
     border: none;
     box-shadow: none;
     text-align: center;
@@ -91,7 +99,7 @@
     background-color: #4ECDC4;
     margin-left: 10%;
     overflow-y: auto;
-    overflow-x: hidden ;
+    overflow-x: hidden;
 }
 
 .container {
@@ -99,12 +107,15 @@
 }
 
 .selectPhoto {
-    border: none;
-    box-shadow: none;
-    text-align: center;
     height: 30px;
-    width: 100%;
-    background-color: white;
+    width: 98.5%;
+}
+
+.photo {
+    height: 32px;
+    width: 32px;
+    border-radius: 16px;
+    background: white;
 }
 
 body {
@@ -113,8 +124,9 @@ body {
     color: white;
     font-family: "Arial", serif;
 }
+
 .user {
-overflow: hidden;
+    overflow: hidden;
     height: auto;
     word-wrap: break-word;
 }
