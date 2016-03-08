@@ -1,5 +1,13 @@
+function Message(userNick, mesText, id, photoURL) {
 
-
+    this.nick = userNick;
+    this.mesText = mesText;
+    this.changed = false;
+    this.del = false;
+    this.photoURl = photoURL;
+    this.id = id;
+}
+var messages = [];
 function run() {
     var appContainer = document.getElementsByClassName('chat')[0];
     appContainer.addEventListener('click', delegateEvent);
@@ -21,13 +29,27 @@ function delegateEvent(evtObj) {
 }
 function delMessage(evtObj) {
     var img = '\<div><button disabled><img disable src="http://s1.iconbird.com/ico/1212/264/w16h161355246842delete6.png"></div>';
-    evtObj.target.parentNode.parentNode.parentNode.parentNode.childNodes[1].childNodes[1].innerHTML ='';
-    evtObj.target.parentNode.parentNode.parentNode.parentNode.childNodes[2].innerHTML =img;
+    var delMsgID = evtObj.target.parentNode.parentNode.parentNode.parentNode.id;
+    messages.forEach(function (item) {
+        if (item.id == delMsgID) {
+            item.del = true;
+            item.mesText='';
+        }
+    });
+    evtObj.target.parentNode.parentNode.parentNode.parentNode.childNodes[1].childNodes[1].innerHTML = '';
+    evtObj.target.parentNode.parentNode.parentNode.parentNode.childNodes[2].innerHTML = img;
+
 }
 function changeMessage(evtObj) {
     var todoText = document.getElementsByClassName('entryField')[0];
-
     if (todoText.value) {
+        var chMsgID = evtObj.target.parentNode.parentNode.parentNode.parentNode.id;
+        messages.forEach(function (item) {
+            if (item.id == chMsgID) {
+                item.changed = true;
+                item.mesText=todoText.value;
+            }
+        });
         evtObj.target.parentNode.parentNode.parentNode.parentNode.childNodes[1].childNodes[1].innerHTML = todoText.value;
         todoText.value = '';
     }
@@ -41,46 +63,48 @@ function addTodo(value) {
     if (!value) {
         return;
     }
-
     var item = createItem(value);
     var items = document.getElementsByClassName('messages')[0];
     items.appendChild(item);
 }
 
 function createItem(text) {
-    var divItem = document.createElement('div');
-
-    divItem.classList.add('myMessage');
-    divItem.appendChild(createLeft());
-    divItem.appendChild(createCenter(text));
-    divItem.appendChild(createRight());
-
-    return divItem;
+    if ((document.getElementsByClassName('userName')[0].value)) {
+        var divItem = document.createElement('div');
+        var nick = document.getElementsByClassName('userName')[0].value.trim();
+        var photo = document.getElementsByClassName('selectPhoto')[0].value;
+        messages.push(new Message(nick, text, messages.length , photo));
+        divItem.classList.add('myMessage');
+        divItem.setAttribute('id', (messages.length - 1).toString());
+        divItem.appendChild(createLeft());
+        divItem.appendChild(createCenter(text));
+        divItem.appendChild(createRight());
+        return divItem;
+    }
+    else {
+        alert('Enter user name!');
+    }
 }
 function createLeft() {
     var left = document.createElement('div');
     var img = document.createElement('img');
     img.classList.add('photo');
-    img.setAttribute('src',document.getElementsByClassName('selectPhoto')[0].value);
+    img.setAttribute('src', messages[messages.length - 1].photoURl);
     left.classList.add('leftColumn');
     left.appendChild(img);
     return left;
 }
 function createCenter(text) {
-    if ((document.getElementsByClassName('userName')[0].value)) {
-        var center = document.createElement('div');
-        var name = document.createElement('div');
-        var message = document.createElement('div');
-        center.classList.add('centerColumn');
-        name.appendChild(document.createTextNode(document.getElementsByClassName('userName')[0].value.trim()));
-        message.appendChild(document.createTextNode(text));
-        center.appendChild(name);
-        center.appendChild(message);
-        return center;
-    }
-    else {
-        alert('Enter user name!');
-    }
+    var center = document.createElement('div');
+    var name = document.createElement('div');
+    var message = document.createElement('div');
+    center.classList.add('centerColumn');
+    name.appendChild(document.createTextNode(messages[messages.length - 1].nick));
+    message.appendChild(document.createTextNode(text));
+    center.appendChild(name);
+    center.appendChild(message);
+    return center;
+
 }
 function createRight() {
     var right = document.createElement('div');
@@ -89,7 +113,6 @@ function createRight() {
     var delButton = document.createElement('button');
     var imgDelButton = document.createElement('img');
     imgDelButton.classList.add('delButton');
-
     imgDelButton.setAttribute('src', 'http://s1.iconbird.com/ico/1212/264/w16h161355246842delete6.png');
     var divChangeButton = document.createElement('div');
     var changeButton = document.createElement('button');
