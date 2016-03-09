@@ -117,7 +117,10 @@
     border-radius: 16px;
     background: white;
 }
-
+.name{
+    padding-top: 10px ;
+    padding-bottom: 10px ;
+}
 body {
     background-color: #686490;
 

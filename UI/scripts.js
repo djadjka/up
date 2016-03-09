@@ -11,7 +11,6 @@ var messages = [];
 function run() {
     var appContainer = document.getElementsByClassName('chat')[0];
     appContainer.addEventListener('click', delegateEvent);
-    appContainer.addEventListener('click', delegateEvent);
 }
 function delegateEvent(evtObj) {
     if (evtObj.type === 'click' && evtObj.target.classList.contains('inputButton')) {
@@ -64,8 +63,10 @@ function printArrMess() {
 function addMyMessage() {
     if ((document.getElementsByClassName('userName')[0].value && document.getElementsByClassName('entryField')[0].value)) {
         createItem();
+        var divMes = createDivMessage(messages[messages.length - 1]);
         var items = document.getElementsByClassName('messages')[0];
-        items.appendChild(createDivMessage(messages[messages.length - 1]));
+        items.appendChild(divMes);
+        items.scrollTop+=divMes.clientHeight;
     }
     else {
         alert('Enter user name and message!');
@@ -106,6 +107,7 @@ function createLeft(message) {
 function createCenter(message) {
     var center = document.createElement('div');
     var name = document.createElement('div');
+    name.classList.add('name');
     var text = document.createElement('div');
     center.classList.add('centerColumn');
     name.appendChild(document.createTextNode(message.nick));
