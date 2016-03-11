@@ -67,7 +67,6 @@ function addMyMessage() {
         var items = document.getElementsByClassName('messages')[0];
         items.appendChild(divMes);
         items.scrollTop+=items.scrollHeight;
-        alert(items.scrollTop);
     }
     else {
         alert('Enter user name and message!');
