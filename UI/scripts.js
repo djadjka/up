@@ -83,7 +83,6 @@ function printArrMess() {
     })
 }
 function addMyMessage() {
-<<<<<<< HEAD
     if (document.getElementsByClassName('userName')[0].value.trim()) {
         if (document.getElementsByClassName('entryField')[0].value.trim()) {
             createItem();
@@ -93,14 +92,6 @@ function addMyMessage() {
             items.appendChild(divMes);
             items.scrollTop += items.scrollHeight;
         }
-=======
-    if ((document.getElementsByClassName('userName')[0].value && document.getElementsByClassName('entryField')[0].value)) {
-        createItem();
-        var divMes = createDivMessage(messages[messages.length - 1]);
-        var items = document.getElementsByClassName('messages')[0];
-        items.appendChild(divMes);
-        items.scrollTop+=items.scrollHeight;
->>>>>>> eb9b028c535066bf7ea2df4717731d77de5a52b6
     }
     else {
         alert('Enter user name and message!');
