@@ -8,9 +8,23 @@ function Message(userNick, mesText, id, photoURL, my) {
     this.id = id;
 }
 var messages = [];
+var delImgSrc = 'http://s1.iconbird.com/ico/1212/264/w16h161355246842delete6.png';
+var changeImgSrc = 'http://music.privet.ru/img/pics/edit-message-16x16.gif';
+var curentNick ;
 function run() {
     var appContainer = document.getElementsByClassName('chat')[0];
     appContainer.addEventListener('click', delegateEvent);
+    appContainer.addEventListener('keydown', delegateEvent);
+    //messages=localStorage.getItem('messages');
+}
+function generateUUID() {
+    var d = new Date().getTime();
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        var r = (d + Math.random() * 16) % 16 | 0;
+        d = Math.floor(d / 16);
+        return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+
 }
 function delegateEvent(evtObj) {
     if (evtObj.type === 'click' && evtObj.target.classList.contains('inputButton')) {
@@ -24,10 +38,16 @@ function delegateEvent(evtObj) {
     if (evtObj.type === 'click' && evtObj.target.classList.contains('changeButton')) {
         changeMessage(evtObj);
     }
+    if (evtObj.type === 'keydown' && evtObj.target.classList.contains('entryField')) {
+        if (evtObj.keyCode == 13 && evtObj.shiftKey) {
+            addMyMessage(evtObj);
+        }
+    }
 
 }
 function delMessage(evtObj) {
-    var img = '\<div><button disabled><img disable src="http://s1.iconbird.com/ico/1212/264/w16h161355246842delete6.png"></div>';
+    var img = '\<div><button disabled>' +
+        '\<img disable src="http://s1.iconbird.com/ico/1212/264/w16h161355246842delete6.png"></div>';
     var delMsgID = evtObj.target.parentNode.parentNode.parentNode.parentNode.id;
     messages.forEach(function (item) {
         if (item.id == delMsgID) {
@@ -35,13 +55,14 @@ function delMessage(evtObj) {
             item.mesText = '';
         }
     });
+    setLocalStorage();
     evtObj.target.parentNode.parentNode.parentNode.parentNode.childNodes[1].childNodes[1].innerHTML = '';
     evtObj.target.parentNode.parentNode.parentNode.parentNode.childNodes[2].innerHTML = img;
 
 }
 function changeMessage(evtObj) {
     var todoText = document.getElementsByClassName('entryField')[0];
-    if (todoText.value) {
+    if (todoText.value.trim()) {
         var chMsgID = evtObj.target.parentNode.parentNode.parentNode.parentNode.id;
         messages.forEach(function (item) {
             if (item.id == chMsgID) {
@@ -51,6 +72,7 @@ function changeMessage(evtObj) {
         });
         evtObj.target.parentNode.parentNode.parentNode.parentNode.childNodes[1].childNodes[1].innerHTML = todoText.value;
         todoText.value = '';
+        setLocalStorage();
     }
 }
 function printArrMess() {
@@ -61,13 +83,15 @@ function printArrMess() {
     })
 }
 function addMyMessage() {
-    if ((document.getElementsByClassName('userName')[0].value && document.getElementsByClassName('entryField')[0].value)) {
-        createItem();
-        var divMes = createDivMessage(messages[messages.length - 1]);
-        var items = document.getElementsByClassName('messages')[0];
-        items.appendChild(divMes);
-        items.scrollTop+=items.scrollHeight;
-        alert(items.scrollTop);
+    if (document.getElementsByClassName('userName')[0].value.trim()) {
+        if (document.getElementsByClassName('entryField')[0].value.trim()) {
+            createItem();
+            alert(JSON.stringify(messages));
+            var divMes = createDivMessage(messages[messages.length - 1]);
+            var items = document.getElementsByClassName('messages')[0];
+            items.appendChild(divMes);
+            items.scrollTop += items.scrollHeight;
+        }
     }
     else {
         alert('Enter user name and message!');
@@ -75,12 +99,12 @@ function addMyMessage() {
 }
 function createItem() {
 
-        var nick = document.getElementsByClassName('userName')[0].value;
-        var mesText = document.getElementsByClassName('entryField')[0].value;
-        document.getElementsByClassName('entryField')[0].value = '';
-        var photoURL = document.getElementsByClassName('selectPhoto')[0].value;
-        messages.push(new Message(nick, mesText, messages.length, photoURL, true));
-
+    curentNick = document.getElementsByClassName('userName')[0].value;
+    var mesText = document.getElementsByClassName('entryField')[0].value;
+    document.getElementsByClassName('entryField')[0].value = '';
+    var photoURL = document.getElementsByClassName('selectPhoto')[0].value;
+    messages.push(new Message(curentNick, mesText, generateUUID(), photoURL, true));
+    setLocalStorage();
 }
 function createDivMessage(message) {
     var divItem = document.createElement('div');
@@ -129,7 +153,7 @@ function createRight(message) {
     var imgChangeButton = document.createElement('img');
     if (message.my) {
         imgDelButton.classList.add('delButton');
-        imgDelButton.setAttribute('src', 'http://s1.iconbird.com/ico/1212/264/w16h161355246842delete6.png');
+        imgDelButton.setAttribute('src', delImgSrc);
         delButton.appendChild(imgDelButton);
         divDelButton.appendChild(delButton);
         if (message.del) {
@@ -138,7 +162,7 @@ function createRight(message) {
         }
         else {
             imgChangeButton.classList.add('changeButton');
-            imgChangeButton.setAttribute('src', 'http://music.privet.ru/img/pics/edit-message-16x16.gif');
+            imgChangeButton.setAttribute('src', changeImgSrc);
             changeButton.appendChild(imgChangeButton);
             divChangeButton.appendChild(changeButton);
             right.appendChild(divDelButton);
@@ -148,7 +172,7 @@ function createRight(message) {
     else {
         if (message.del) {
             imgDelButton.classList.add('delButton');
-            imgDelButton.setAttribute('src', 'http://s1.iconbird.com/ico/1212/264/w16h161355246842delete6.png');
+            imgDelButton.setAttribute('src', delImgSrc);
             delButton.disabled = true;
             delButton.appendChild(imgDelButton);
             divDelButton.appendChild(delButton);
@@ -157,7 +181,7 @@ function createRight(message) {
         else if (message.changed) {
             imgChangeButton.classList.add('changeButton');
             changeButton.disabled = true;
-            imgChangeButton.setAttribute('src', 'http://music.privet.ru/img/pics/edit-message-16x16.gif');
+            imgChangeButton.setAttribute('src', changeImgSrc);
             changeButton.appendChild(imgChangeButton);
             divChangeButton.appendChild(changeButton);
             right.appendChild(divChangeButton);
@@ -165,4 +189,8 @@ function createRight(message) {
     }
     return right;
 }
-
+function setLocalStorage() {
+    localStorage.setItem('messages', JSON.stringify(messages));
+    localStorage.setItem('lastUSerName', curentNick);
+    //????????????????????
+}
