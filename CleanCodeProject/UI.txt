@@ -1,0 +1,10 @@
+1)read from a file
+2)write from a file
+3)add message
+4)view the history of messages in chronological order
+5)delete the message by ID
+6)search in the history of posts by author
+7)search in the history of posts by keyword
+8)search in the history of posts by a regular expression
+9)view message history for a certain period
+0)exit

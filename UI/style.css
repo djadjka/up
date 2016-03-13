@@ -1,0 +1,183 @@
+.error {
+    height: 20px;
+    background-color: red;
+    opacity: 0.7;
+}
+
+.userName {
+    height: 30px;
+    width: 98.5%;
+    text-align: left;
+}
+
+.chat {
+    height: 700px;
+    margin-left: 35%;
+}
+
+.messages {
+    height: 90%;
+    overflow: auto;
+}
+
+.myMessage {
+    background-color: #FFC107;
+    height: auto;
+    overflow: hidden;
+}
+
+.message {
+    height: auto;
+    background-color: #8BC34A;
+    overflow: hidden;
+}
+
+.rightColumn {
+    width: 10%;
+    height: auto;
+    float: left;
+    text-align: right;
+}
+
+.rightColumn button {
+    background-color: inherit;
+    border: none;
+}
+
+.delButton {
+    background-color: inherit;
+    border: none;
+}
+
+.changeButton {
+    background-color: inherit;
+    border: none;
+}
+
+.centerColumn {
+    width: 75%;
+    float: left;
+    text-align: left;
+    height: auto;
+    word-wrap: break-word;
+}
+
+.leftColumn {
+    width: 15%;
+    float: left;
+    height: auto;
+}
+
+.lowerBlock {
+    background-color: #4ECDC4;
+    height: 10%;
+    vertical-align: middle;
+}
+
+.entryField {
+    height: 60%;
+    width: 70%;
+    float: left;
+    margin: 2%;
+    resize: none;
+}
+
+.inputButton {
+    border: none;
+    box-shadow: none;
+    text-align: center;
+    font-size: 30px;
+    background-color: #FF3F82;
+    color: white;
+    margin: 3%;
+}
+
+.allUsers {
+    float: left;
+    height: 700px;
+    width: 20%;
+    background-color: #4ECDC4;
+    margin-left: 10%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.container {
+    margin: auto 10%;
+}
+
+.selectPhoto {
+    height: 30px;
+    width: 98.5%;
+}
+
+.photo {
+    height: 32px;
+    width: 32px;
+    border-radius: 16px;
+    background: white;
+}
+.name{
+    padding-top: 10px ;
+    padding-bottom: 10px ;
+}
+body {
+    background-color: #686490;
+
+    color: white;
+    font-family: "Arial", serif;
+}
+
+.user {
+    overflow: hidden;
+    height: auto;
+    word-wrap: break-word;
+}
+
+@media (max-width: 1050px) {
+    .container {
+        margin: auto;
+    }
+
+    .chat {
+        margin-right: 5%;
+    }
+}
+
+@media (max-width: 720px) {
+    .allUsers {
+        float: none;
+        height: 150px;
+        width: 80%;
+        overflow-y: auto;
+    }
+
+    .chat {
+        margin: auto 10%;
+    }
+
+    .userName {
+        width: 99.3%;
+    }
+
+    .user {
+        float: left;
+        width: 20%;
+    }
+}
+
+@media (max-width: 560px ) {
+    .chat {
+        margin: 0;
+        height: 550px;
+    }
+
+    .allUsers {
+        width: 100%;
+        margin: 0;
+    }
+
+    .entryField {
+        width: 60%;
+    }
+}
