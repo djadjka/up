@@ -20,12 +20,14 @@ function run() {
 }
 
 function restore() {
-    curentNick = localStorage.getItem('curentNick');
-    photoURL = localStorage.getItem('photoURL');
-    document.getElementsByClassName('userName')[0].value = curentNick;
-    document.getElementsByClassName('selectPhoto')[0].value = photoURL;
-    messages = JSON.parse(localStorage.getItem('messages'));
-    printArrMess();
+    if (localStorage.getItem('messages')) {
+      curentNick = localStorage.getItem('curentNick');
+      photoURL = localStorage.getItem('photoURL');
+      document.getElementsByClassName('userName')[0].value = curentNick;
+      document.getElementsByClassName('selectPhoto')[0].value = photoURL;
+      messages = JSON.parse(localStorage.getItem('messages'));
+      printArrMess();
+    }
 }
 function generateUUID() {
     var d = new Date().getTime();
