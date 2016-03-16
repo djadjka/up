@@ -11,7 +11,7 @@ var messages = [];
 var delImgSrc = 'http://s1.iconbird.com/ico/1212/264/w16h161355246842delete6.png';
 var changeImgSrc = 'http://music.privet.ru/img/pics/edit-message-16x16.gif';
 var curentNick = '';
-var photoURL='' ;
+var photoURL = '';
 function run() {
     var appContainer = document.getElementsByClassName('container')[0];
     appContainer.addEventListener('click', delegateClickEvent);
@@ -21,12 +21,12 @@ function run() {
 
 function restore() {
     if (localStorage.getItem('messages')) {
-      curentNick = localStorage.getItem('curentNick');
-      photoURL = localStorage.getItem('photoURL');
-      document.getElementsByClassName('userName')[0].value = curentNick;
-      document.getElementsByClassName('selectPhoto')[0].value = photoURL;
-      messages = JSON.parse(localStorage.getItem('messages'));
-      printArrMess();
+        curentNick = localStorage.getItem('curentNick');
+        photoURL = localStorage.getItem('photoURL');
+        document.getElementsByClassName('userName')[0].value = curentNick;
+        document.getElementsByClassName('selectPhoto')[0].value = photoURL;
+        messages = JSON.parse(localStorage.getItem('messages'));
+        printArrMess();
     }
 }
 function generateUUID() {
@@ -70,15 +70,14 @@ function delegateKeydownEvent(evtObj) {
 
 function changeNick() {
     curentNick = document.getElementsByClassName('userName')[0].value.trim();
-    document.getElementsByClassName('messages')[0].innerHTML = '';
-    printArrMess();
-    if(document.getElementById('LoginCheckBox').checked){
+    redrawing();
+    if (document.getElementById('LoginCheckBox').checked) {
         localStorage.setItem('curentNick', curentNick);
-        localStorage.setItem('photoURL',photoURL);
+        localStorage.setItem('photoURL', photoURL);
     }
     else {
         localStorage.setItem('curentNick', '');
-        localStorage.setItem('photoURL','');
+        localStorage.setItem('photoURL', '');
     }
 
     photoURL = document.getElementsByClassName('selectPhoto')[0].value.trim();
@@ -119,9 +118,9 @@ function changeMessage(evtObj) {
 
 function printArrMess() {
     var items = document.getElementsByClassName('messages')[0];
-    messages.forEach(function (item) {
-        items.appendChild(createDivMessage(item));
-    })
+    for (var i = 0; i < messages.length; i++) {
+        items.appendChild(createDivMessage(messages[i]));
+    }
 }
 
 function addMyMessage() {
@@ -236,5 +235,22 @@ function createRight(message) {
 
 function setLocalStorage() {
     localStorage.setItem('messages', JSON.stringify(messages));
-    //????????????????????
+}
+function redrawing(){
+    alert(curentNick);
+    messages.forEach(function (item) {
+        var div = document.getElementById(item.id);
+        if(item.nick==curentNick){
+            div.classList.remove('message');
+            div.classList.add('myMessage');
+            div.replaceChild(createRight(item),div.lastChild);
+
+        }
+        else {
+            div.classList.remove('myMessage');
+            div.classList.add('message');
+            div.replaceChild(createRight(item),div.lastChild);
+        }
+
+    });
 }
