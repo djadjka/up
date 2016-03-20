@@ -13,7 +13,8 @@ import java.util.regex.Pattern;
 public class Messages {
     private List<Message> messages;
     private Gson gson;
-
+    private final String REGEX = "[{][^{]+[}]";
+    private final int RECOMENDE_SIZE_MESSAGE = 140;
     public Messages() {
         this.messages = new ArrayList<>();
         this.gson = new GsonBuilder().create();
@@ -23,7 +24,6 @@ public class Messages {
     public void readMessages(File fin) {
         try (Scanner sc = new Scanner(fin)) {
             int counter = 0;
-            final String REGEX = "[{][^{]+[}]";
             StringBuilder sb = new StringBuilder();
             while (sc.hasNextLine()) {
                 sb.append(sc.nextLine());
@@ -76,7 +76,7 @@ public class Messages {
     }
 
     public void addMessage(String author, String message) {
-        final int RECOMENDE_SIZE_MESSAGE = 140;
+
         messages.add(new Message(author, message));
         if (message.length() > RECOMENDE_SIZE_MESSAGE) {
             Log.getInstance().addWarning("message text is too long");
