@@ -1,0 +1,156 @@
+22.03.2016 06:42:12[by.bsu.up.chat.server.ServerHandler] request begin
+22.03.2016 06:42:12[by.bsu.up.chat.server.ServerHandler] method GET
+22.03.2016 06:42:12[by.bsu.up.chat.server.ServerHandler] equest parameters: token=TN11EN
+22.03.2016 06:42:12[by.bsu.up.chat.server.ServerHandler] response: history size= 0
+22.03.2016 06:42:12[by.bsu.up.chat.server.ServerHandler] response sent
+22.03.2016 06:42:12[by.bsu.up.chat.server.ServerHandler] request end
+22.03.2016 06:42:13[by.bsu.up.chat.server.ServerHandler] request begin
+22.03.2016 06:42:13[by.bsu.up.chat.server.ServerHandler] method GET
+22.03.2016 06:42:13[by.bsu.up.chat.server.ServerHandler] equest parameters: token=TN11EN
+22.03.2016 06:42:13[by.bsu.up.chat.server.ServerHandler] response: history size= 0
+22.03.2016 06:42:13[by.bsu.up.chat.server.ServerHandler] response sent
+22.03.2016 06:42:13[by.bsu.up.chat.server.ServerHandler] request end
+22.03.2016 06:42:14[by.bsu.up.chat.server.ServerHandler] request begin
+22.03.2016 06:42:14[by.bsu.up.chat.server.ServerHandler] method POST
+22.03.2016 06:42:14[by.bsu.up.chat.server.ServerHandler] Received new message from user: asdas
+22.03.2016 06:42:14[by.bsu.up.chat.server.ServerHandler] response: history size= 1
+22.03.2016 06:42:14[by.bsu.up.chat.server.ServerHandler] response sent
+22.03.2016 06:42:14[by.bsu.up.chat.server.ServerHandler] request end
+22.03.2016 06:42:14[by.bsu.up.chat.server.ServerHandler] request begin
+22.03.2016 06:42:14[by.bsu.up.chat.server.ServerHandler] method GET
+22.03.2016 06:42:14[by.bsu.up.chat.server.ServerHandler] equest parameters: token=TN11EN
+22.03.2016 06:42:14[by.bsu.up.chat.server.ServerHandler] response: history size= 1
+22.03.2016 06:42:14[by.bsu.up.chat.server.ServerHandler] response sent
+22.03.2016 06:42:14[by.bsu.up.chat.server.ServerHandler] request end
+22.03.2016 06:42:15[by.bsu.up.chat.server.ServerHandler] request begin
+22.03.2016 06:42:15[by.bsu.up.chat.server.ServerHandler] method POST
+22.03.2016 06:42:15[by.bsu.up.chat.server.ServerHandler] Received new message from user: asdas
+22.03.2016 06:42:15[by.bsu.up.chat.server.ServerHandler] response: history size= 2
+22.03.2016 06:42:15[by.bsu.up.chat.server.ServerHandler] response sent
+22.03.2016 06:42:15[by.bsu.up.chat.server.ServerHandler] request end
+22.03.2016 06:42:15[by.bsu.up.chat.server.ServerHandler] request begin
+22.03.2016 06:42:15[by.bsu.up.chat.server.ServerHandler] method GET
+22.03.2016 06:42:15[by.bsu.up.chat.server.ServerHandler] equest parameters: token=TN19EN
+22.03.2016 06:42:15[by.bsu.up.chat.server.ServerHandler] response: history size= 2
+22.03.2016 06:42:15[by.bsu.up.chat.server.ServerHandler] response sent
+22.03.2016 06:42:15[by.bsu.up.chat.server.ServerHandler] request end
+22.03.2016 06:42:16[by.bsu.up.chat.server.ServerHandler] request begin
+22.03.2016 06:42:16[by.bsu.up.chat.server.ServerHandler] method POST
+22.03.2016 06:42:16[by.bsu.up.chat.server.ServerHandler] Received new message from user: asdasd
+22.03.2016 06:42:16[by.bsu.up.chat.server.ServerHandler] response: history size= 3
+22.03.2016 06:42:16[by.bsu.up.chat.server.ServerHandler] response sent
+22.03.2016 06:42:16[by.bsu.up.chat.server.ServerHandler] request end
+22.03.2016 06:42:16[by.bsu.up.chat.server.ServerHandler] request begin
+22.03.2016 06:42:16[by.bsu.up.chat.server.ServerHandler] method GET
+22.03.2016 06:42:16[by.bsu.up.chat.server.ServerHandler] equest parameters: token=TN27EN
+22.03.2016 06:42:16[by.bsu.up.chat.server.ServerHandler] response: history size= 3
+22.03.2016 06:42:16[by.bsu.up.chat.server.ServerHandler] response sent
+22.03.2016 06:42:16[by.bsu.up.chat.server.ServerHandler] request end
+22.03.2016 06:42:17[by.bsu.up.chat.server.ServerHandler] request begin
+22.03.2016 06:42:17[by.bsu.up.chat.server.ServerHandler] method POST
+22.03.2016 06:42:17[by.bsu.up.chat.server.ServerHandler] Received new message from user: asdasd
+22.03.2016 06:42:17[by.bsu.up.chat.server.ServerHandler] response: history size= 4
+22.03.2016 06:42:17[by.bsu.up.chat.server.ServerHandler] response sent
+22.03.2016 06:42:17[by.bsu.up.chat.server.ServerHandler] request end
+22.03.2016 06:42:17[by.bsu.up.chat.server.ServerHandler] request begin
+22.03.2016 06:42:17[by.bsu.up.chat.server.ServerHandler] method GET
+22.03.2016 06:42:17[by.bsu.up.chat.server.ServerHandler] equest parameters: token=TN35EN
+22.03.2016 06:42:17[by.bsu.up.chat.server.ServerHandler] response: history size= 4
+22.03.2016 06:42:17[by.bsu.up.chat.server.ServerHandler] response sent
+22.03.2016 06:42:17[by.bsu.up.chat.server.ServerHandler] request end
+22.03.2016 06:42:17[by.bsu.up.chat.server.ServerHandler] request begin
+22.03.2016 06:42:17[by.bsu.up.chat.server.ServerHandler] method POST
+22.03.2016 06:42:17[by.bsu.up.chat.server.ServerHandler] Received new message from user: asdasd
+22.03.2016 06:42:17[by.bsu.up.chat.server.ServerHandler] response: history size= 5
+22.03.2016 06:42:17[by.bsu.up.chat.server.ServerHandler] response sent
+22.03.2016 06:42:17[by.bsu.up.chat.server.ServerHandler] request end
+22.03.2016 06:42:18[by.bsu.up.chat.server.ServerHandler] request begin
+22.03.2016 06:42:18[by.bsu.up.chat.server.ServerHandler] method GET
+22.03.2016 06:42:18[by.bsu.up.chat.server.ServerHandler] equest parameters: token=TN43EN
+22.03.2016 06:42:18[by.bsu.up.chat.server.ServerHandler] response: history size= 5
+22.03.2016 06:42:18[by.bsu.up.chat.server.ServerHandler] response sent
+22.03.2016 06:42:18[by.bsu.up.chat.server.ServerHandler] request end
+22.03.2016 06:42:18[by.bsu.up.chat.server.ServerHandler] request begin
+22.03.2016 06:42:18[by.bsu.up.chat.server.ServerHandler] method POST
+22.03.2016 06:42:18[by.bsu.up.chat.server.ServerHandler] Received new message from user: asdasd
+22.03.2016 06:42:18[by.bsu.up.chat.server.ServerHandler] response: history size= 6
+22.03.2016 06:42:18[by.bsu.up.chat.server.ServerHandler] response sent
+22.03.2016 06:42:18[by.bsu.up.chat.server.ServerHandler] request end
+22.03.2016 06:42:19[by.bsu.up.chat.server.ServerHandler] request begin
+22.03.2016 06:42:19[by.bsu.up.chat.server.ServerHandler] method GET
+22.03.2016 06:42:19[by.bsu.up.chat.server.ServerHandler] equest parameters: token=TN51EN
+22.03.2016 06:42:19[by.bsu.up.chat.server.ServerHandler] response: history size= 6
+22.03.2016 06:42:19[by.bsu.up.chat.server.ServerHandler] response sent
+22.03.2016 06:42:19[by.bsu.up.chat.server.ServerHandler] request end
+22.03.2016 06:42:20[by.bsu.up.chat.server.ServerHandler] request begin
+22.03.2016 06:42:20[by.bsu.up.chat.server.ServerHandler] method GET
+22.03.2016 06:42:20[by.bsu.up.chat.server.ServerHandler] equest parameters: token=TN59EN
+22.03.2016 06:42:20[by.bsu.up.chat.server.ServerHandler] response: history size= 6
+22.03.2016 06:42:20[by.bsu.up.chat.server.ServerHandler] response sent
+22.03.2016 06:42:20[by.bsu.up.chat.server.ServerHandler] request end
+22.03.2016 06:42:21[by.bsu.up.chat.server.ServerHandler] request begin
+22.03.2016 06:42:21[by.bsu.up.chat.server.ServerHandler] method GET
+22.03.2016 06:42:21[by.bsu.up.chat.server.ServerHandler] equest parameters: token=TN59EN
+22.03.2016 06:42:21[by.bsu.up.chat.server.ServerHandler] response: history size= 6
+22.03.2016 06:42:21[by.bsu.up.chat.server.ServerHandler] response sent
+22.03.2016 06:42:21[by.bsu.up.chat.server.ServerHandler] request end
+22.03.2016 06:42:22[by.bsu.up.chat.server.ServerHandler] request begin
+22.03.2016 06:42:22[by.bsu.up.chat.server.ServerHandler] method GET
+22.03.2016 06:42:22[by.bsu.up.chat.server.ServerHandler] equest parameters: token=TN59EN
+22.03.2016 06:42:22[by.bsu.up.chat.server.ServerHandler] response: history size= 6
+22.03.2016 06:42:22[by.bsu.up.chat.server.ServerHandler] response sent
+22.03.2016 06:42:22[by.bsu.up.chat.server.ServerHandler] request end
+22.03.2016 06:42:23[by.bsu.up.chat.server.ServerHandler] request begin
+22.03.2016 06:42:23[by.bsu.up.chat.server.ServerHandler] method GET
+22.03.2016 06:42:23[by.bsu.up.chat.server.ServerHandler] equest parameters: token=TN59EN
+22.03.2016 06:42:23[by.bsu.up.chat.server.ServerHandler] response: history size= 6
+22.03.2016 06:42:23[by.bsu.up.chat.server.ServerHandler] response sent
+22.03.2016 06:42:23[by.bsu.up.chat.server.ServerHandler] request end
+22.03.2016 06:42:24[by.bsu.up.chat.server.ServerHandler] request begin
+22.03.2016 06:42:24[by.bsu.up.chat.server.ServerHandler] method GET
+22.03.2016 06:42:24[by.bsu.up.chat.server.ServerHandler] equest parameters: token=TN59EN
+22.03.2016 06:42:25[by.bsu.up.chat.server.ServerHandler] response: history size= 6
+22.03.2016 06:42:25[by.bsu.up.chat.server.ServerHandler] response sent
+22.03.2016 06:42:25[by.bsu.up.chat.server.ServerHandler] request end
+22.03.2016 06:42:26[by.bsu.up.chat.server.ServerHandler] request begin
+22.03.2016 06:42:26[by.bsu.up.chat.server.ServerHandler] method GET
+22.03.2016 06:42:26[by.bsu.up.chat.server.ServerHandler] equest parameters: token=TN59EN
+22.03.2016 06:42:26[by.bsu.up.chat.server.ServerHandler] response: history size= 6
+22.03.2016 06:42:26[by.bsu.up.chat.server.ServerHandler] response sent
+22.03.2016 06:42:26[by.bsu.up.chat.server.ServerHandler] request end
+22.03.2016 06:42:27[by.bsu.up.chat.server.ServerHandler] request begin
+22.03.2016 06:42:27[by.bsu.up.chat.server.ServerHandler] method GET
+22.03.2016 06:42:27[by.bsu.up.chat.server.ServerHandler] equest parameters: token=TN59EN
+22.03.2016 06:42:27[by.bsu.up.chat.server.ServerHandler] response: history size= 6
+22.03.2016 06:42:27[by.bsu.up.chat.server.ServerHandler] response sent
+22.03.2016 06:42:27[by.bsu.up.chat.server.ServerHandler] request end
+22.03.2016 06:42:28[by.bsu.up.chat.server.ServerHandler] request begin
+22.03.2016 06:42:28[by.bsu.up.chat.server.ServerHandler] method GET
+22.03.2016 06:42:28[by.bsu.up.chat.server.ServerHandler] equest parameters: token=TN59EN
+22.03.2016 06:42:28[by.bsu.up.chat.server.ServerHandler] response: history size= 6
+22.03.2016 06:42:28[by.bsu.up.chat.server.ServerHandler] response sent
+22.03.2016 06:42:28[by.bsu.up.chat.server.ServerHandler] request end
+22.03.2016 06:42:29[by.bsu.up.chat.server.ServerHandler] request begin
+22.03.2016 06:42:29[by.bsu.up.chat.server.ServerHandler] method GET
+22.03.2016 06:42:29[by.bsu.up.chat.server.ServerHandler] equest parameters: token=TN59EN
+22.03.2016 06:42:29[by.bsu.up.chat.server.ServerHandler] response: history size= 6
+22.03.2016 06:42:29[by.bsu.up.chat.server.ServerHandler] response sent
+22.03.2016 06:42:29[by.bsu.up.chat.server.ServerHandler] request end
+22.03.2016 06:42:30[by.bsu.up.chat.server.ServerHandler] request begin
+22.03.2016 06:42:30[by.bsu.up.chat.server.ServerHandler] method GET
+22.03.2016 06:42:30[by.bsu.up.chat.server.ServerHandler] equest parameters: token=TN59EN
+22.03.2016 06:42:30[by.bsu.up.chat.server.ServerHandler] response: history size= 6
+22.03.2016 06:42:30[by.bsu.up.chat.server.ServerHandler] response sent
+22.03.2016 06:42:30[by.bsu.up.chat.server.ServerHandler] request end
+22.03.2016 06:42:31[by.bsu.up.chat.server.ServerHandler] request begin
+22.03.2016 06:42:31[by.bsu.up.chat.server.ServerHandler] method GET
+22.03.2016 06:42:31[by.bsu.up.chat.server.ServerHandler] equest parameters: token=TN59EN
+22.03.2016 06:42:31[by.bsu.up.chat.server.ServerHandler] response: history size= 6
+22.03.2016 06:42:31[by.bsu.up.chat.server.ServerHandler] response sent
+22.03.2016 06:42:31[by.bsu.up.chat.server.ServerHandler] request end
+22.03.2016 06:42:32[by.bsu.up.chat.server.ServerHandler] request begin
+22.03.2016 06:42:32[by.bsu.up.chat.server.ServerHandler] method GET
+22.03.2016 06:42:32[by.bsu.up.chat.server.ServerHandler] equest parameters: token=TN59EN
+22.03.2016 06:42:32[by.bsu.up.chat.server.ServerHandler] response: history size= 6
+22.03.2016 06:42:32[by.bsu.up.chat.server.ServerHandler] response sent
+22.03.2016 06:42:32[by.bsu.up.chat.server.ServerHandler] request end
