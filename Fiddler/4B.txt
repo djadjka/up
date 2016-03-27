@@ -1,0 +1,13 @@
+GET http://192.168.56.1:999/chat?token=TN11EN HTTP/1.1
+User-Agent: Java/1.8.0_60
+Host: 192.168.56.1:999
+Accept: text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2
+Connection: keep-alive
+
+
+HTTP/1.1 200 OK
+Date: Sun, 27 Mar 2016 08:37:00 GMT
+Access-control-allow-origin: *
+Content-length: 73
+
+{"messages":["privet","asda","asdasd","asdasd","asdas"],"token":"TN51EN"}
