@@ -11,7 +11,7 @@
 }
 
 .chat {
-    height: 600px;
+    height: 700px;
     margin-left: 35%;
 }
 
@@ -25,14 +25,14 @@
     background-color: #FFC107;
     height: auto;
     overflow: hidden;
-    border-bottom: 9px solid #686490 ;
+    border-bottom: 9px solid #686490;
 }
 
 .message {
     height: auto;
     background-color: #8BC34A;
     overflow: hidden;
-    border-bottom: 9px solid #686490 ;
+    border-bottom: 9px solid #686490;
 }
 
 .rightColumn {
@@ -97,7 +97,7 @@
 
 .allUsers {
     float: left;
-    height: 600px;
+    height: 700px;
     width: 20%;
     background-color: #4ECDC4;
     margin-left: 10%;
@@ -120,17 +120,20 @@
     border-radius: 16px;
     background: white;
 }
-.name{
-    padding-top: 5px ;
-    padding-bottom: 10px ;
+
+.name {
+    padding-top: 5px;
+    padding-bottom: 10px;
 }
+
 body {
     background-color: #686490;
 
     color: white;
     font-family: "Arial", serif;
 }
-.logInButton{
+
+.logInButton {
     border: none;
     box-shadow: none;
     text-align: center;
@@ -138,19 +141,25 @@ body {
     background-color: #FF3F82;
     color: white;
 }
+
 .user {
     overflow: hidden;
     height: auto;
     word-wrap: break-word;
 }
 
-@media (max-width: 1050px) {
+@media (max-width: 1366px) {
     .container {
         margin: auto;
     }
 
     .chat {
+        height: 550px;
         margin-right: 5%;
+    }
+
+    .allUsers {
+        height: 550px;
     }
 }
 
@@ -159,7 +168,6 @@ body {
         float: none;
         height: 150px;
         width: 80%;
-        overflow-y: auto;
     }
 
     .chat {
@@ -173,6 +181,10 @@ body {
     .user {
         float: left;
         width: 20%;
+    }
+
+    .selectPhoto {
+        width: 99.3%;
     }
 }
 
