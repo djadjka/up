@@ -39,29 +39,30 @@ function generateUUID() {
 }
 
 function delegateClickEvent(evtObj) {
-    if (evtObj.type === 'click' && evtObj.target.classList.contains('inputButton')) {
+    var classList1 = evtObj.target.classList;
+    if (evtObj.type === 'click' && classList1.contains('inputButton')) {
         addMyMessage(evtObj);
     }
 
-    if (evtObj.type === 'click' && evtObj.target.classList.contains('delButton')) {
+    if (evtObj.type === 'click' && classList1.contains('delButton')) {
         delMessage(evtObj);
     }
-    if (evtObj.type === 'click' && evtObj.target.classList.contains('changeButton')) {
+    if (evtObj.type === 'click' && classList1.contains('changeButton')) {
         changeMessage(evtObj);
     }
-    if (evtObj.type === 'click' && evtObj.target.classList.contains('logInButton')) {
+    if (evtObj.type === 'click' && classList1.contains('logInButton')) {
         changeNick(evtObj);
     }
 }
 
 function delegateKeydownEvent(evtObj) {
-
-    if (evtObj.type === 'keydown' && evtObj.target.classList.contains('entryField')) {
+    var classList = evtObj.target.classList;
+    if (evtObj.type === 'keydown' && classList.contains('entryField')) {
         if (evtObj.keyCode == 13 && evtObj.shiftKey) {
             addMyMessage(evtObj);
         }
     }
-    if (evtObj.type === 'keydown' && evtObj.target.classList.contains('userName')) {
+    if (evtObj.type === 'keydown' && classList.contains('userName')) {
         if (evtObj.keyCode == 13) {
             changeNick(evtObj);
         }
@@ -125,13 +126,15 @@ function printArrMess() {
 
 function addMyMessage() {
     if (curentNick != '') {
-        if (document.getElementsByClassName('entryField')[0].value.trim()) {
-            createItem();
-            var divMes = createDivMessage(messages[messages.length - 1]);
-            var items = document.getElementsByClassName('messages')[0];
-            items.appendChild(divMes);
-            items.scrollTop += items.scrollHeight;
+        if (!document.getElementsByClassName('entryField')[0].value.trim()) {
+            return;
         }
+        createItem();
+        var divMes = createDivMessage(messages[messages.length - 1]);
+        var items = document.getElementsByClassName('messages')[0];
+        items.appendChild(divMes);
+        items.scrollTop += items.scrollHeight;
+
     }
     else {
         alert('Enter user name');
@@ -236,20 +239,19 @@ function createRight(message) {
 function setLocalStorage() {
     localStorage.setItem('messages', JSON.stringify(messages));
 }
-function redrawing(){
-    alert(curentNick);
+function redrawing() {
     messages.forEach(function (item) {
         var div = document.getElementById(item.id);
-        if(item.nick==curentNick){
+        if (item.nick == curentNick) {
             div.classList.remove('message');
             div.classList.add('myMessage');
-            div.replaceChild(createRight(item),div.lastChild);
+            div.replaceChild(createRight(item), div.lastChild);
 
         }
         else {
             div.classList.remove('myMessage');
             div.classList.add('message');
-            div.replaceChild(createRight(item),div.lastChild);
+            div.replaceChild(createRight(item), div.lastChild);
         }
 
     });
