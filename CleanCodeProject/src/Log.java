@@ -3,10 +3,10 @@ import java.io.PrintStream;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-public class LogStorage {
+public class Log {
     private Calendar calendar;
     private PrintStream ps;
-    private static volatile LogStorage instance = new LogStorage();
+    private static volatile Log instance = new Log();
     private final String DESIGN_OUTPUT = "%-30s %-10s %-140s%n";
     private final  String FILE_NAME = "logfile.txt";
 
@@ -20,7 +20,7 @@ public class LogStorage {
     }
 
 
-    public static LogStorage getInstance() {
+    public static Log getInstance() {
         return instance;
     }
 

@@ -8,15 +8,13 @@ import java.io.PrintStream;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 
-public class Messages implements MessageStorage {
+public class Messages {
     private List<Message> messages;
     private Gson gson;
     private final String REGEX = "[{][^{]+[}]";
     private final int RECOMENDE_SIZE_MESSAGE = 140;
-
     public Messages() {
         this.messages = new ArrayList<>();
         this.gson = new GsonBuilder().create();
@@ -67,20 +65,27 @@ public class Messages implements MessageStorage {
     }
 
 
-    public boolean delMessage(String id) {
+    public void delMessage(String id) {
         for (Message message : messages) {
             if (message.getId().compareTo(id) == 0) {
                 messages.remove(message);
-                return true;
+                break;
             }
         }
         Log.getInstance().addInformation(id + " del  Message by id");
-        return false;
     }
 
+    public void addMessage(String author, String message) {
+
+        messages.add(new Message(author, message));
+        if (message.length() > RECOMENDE_SIZE_MESSAGE) {
+            Log.getInstance().addWarning("message text is too long");
+        }
+        Log.getInstance().addInformation(" add Message");
+    }
 
     private void oneMessagePrint(Message message) {
-        System.out.println(message.getText());
+        System.out.println(message.getMessage());
     }
 
     public List<Message> getMessageHistory() {
@@ -91,7 +96,12 @@ public class Messages implements MessageStorage {
     }
 
     public List<Message> getMessageByAuthor(String author) {
-        List<Message> temp = messages.stream().filter(message -> message.getAuthor().trim().compareTo(author.trim()) == 0).collect(Collectors.toList());
+        List<Message> temp = new ArrayList<>();
+        for (Message message : messages) {
+            if (message.getAuthor().trim().compareTo(author.trim()) == 0) {
+                temp.add(message);
+            }
+        }
         Log.getInstance().addInformation(temp.size() + " Found posts by author: " + author);
         return temp;
     }
@@ -99,7 +109,7 @@ public class Messages implements MessageStorage {
     public List<Message> getMessageByKeyWord(String keyWord) {
         List<Message> temp = new ArrayList<>();
         for (Message message : messages) {
-            if (message.getText().contains(keyWord.trim())) {
+            if (message.getMessage().contains(keyWord.trim())) {
                 temp.add(message);
             }
         }
@@ -111,7 +121,7 @@ public class Messages implements MessageStorage {
         Pattern p = Pattern.compile(regExKeyWord.trim());
         List<Message> temp = new ArrayList<>();
         for (Message message : messages) {
-            Matcher m = p.matcher(message.getText());
+            Matcher m = p.matcher(message.getMessage());
             if (m.find()) {
                 temp.add(message);
             }
@@ -144,36 +154,5 @@ public class Messages implements MessageStorage {
         for (Message message : m) {
             oneMessagePrint(message);
         }
-    }
-
-    @Override
-    public List<Message> getPortion(Portion portion) {
-        return null;
-    }
-
-    @Override
-    public void addMessage(Message message) {
-        messages.add(message);
-    }
-
-    @Override
-    public boolean updateMessage(Message message) {
-        for (Message mes : messages) {
-            if (mes.getId().compareTo(message.getId()) == 0) {
-                mes.setText(message.getText());
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public boolean removeMessage(String messageId) {
-        return delMessage(messageId);
-    }
-
-    @Override
-    public int size() {
-        return messages.size();
     }
 }
