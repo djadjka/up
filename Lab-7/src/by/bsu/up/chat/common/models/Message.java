@@ -8,6 +8,8 @@ public class Message implements Serializable {
     private String author;
     private long timestamp;
     private String text;
+    private boolean del;
+    private boolean update;
 
     public String getId() {
         return id;
@@ -41,13 +43,31 @@ public class Message implements Serializable {
         this.text = text;
     }
 
+    public boolean getDel() {
+        return del;
+    }
+
+    public void setDel(boolean del) {
+        this.del = del;
+    }
+
+    public boolean getUpdate() {
+        return update;
+    }
+
+    public void setUpdate(boolean update) {
+        this.update = update;
+    }
+
     @Override
     public String toString() {
         return "Message{" +
                 "id='" + id + '\'' +
                 ", author='" + author + '\'' +
                 ", timestamp=" + timestamp +
-                ", text='" + text + '\'' +
+                ", text='" + text + '\'' + ", " +
+                "del='" + del + '\'' + ", " +
+                "update='" + update + '\'' +
                 '}';
     }
 }

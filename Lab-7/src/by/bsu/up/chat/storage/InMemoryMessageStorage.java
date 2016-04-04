@@ -14,17 +14,19 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import  by.bsu.up.chat.Constants;
+
+
 public class InMemoryMessageStorage implements MessageStorage {
 
     private List<Message> messages;
     private Gson gson;
-    private final String REGEX = "[{][^{]+[}]";
-    private final String FILE_NAME = "messages.txt";
+
 
     public InMemoryMessageStorage() {
         this.messages = new ArrayList<>();
         this.gson = new GsonBuilder().create();
-        readMessages(new File(FILE_NAME));
+        readMessages(new File(Constants.FILE_NAME));
     }
 
 
@@ -35,7 +37,7 @@ public class InMemoryMessageStorage implements MessageStorage {
             while (sc.hasNextLine()) {
                 sb.append(sc.nextLine());
             }
-            Pattern p = Pattern.compile(REGEX);
+            Pattern p = Pattern.compile(Constants.REGEX);
             Matcher m = p.matcher(sb);
             while (m.find()) {
                 try {
@@ -70,9 +72,6 @@ public class InMemoryMessageStorage implements MessageStorage {
             LogStorage.getInstance().addException(e.toString());
         }
     }
-
-
-
 
 
     private void oneMessagePrint(Message message) {
@@ -132,7 +131,7 @@ public class InMemoryMessageStorage implements MessageStorage {
 
     @Override
     public void addMessage(Message message) {
-        writeMessages(new File(FILE_NAME));
+        writeMessages(new File(Constants.FILE_NAME));
         messages.add(message);
     }
 
@@ -140,8 +139,12 @@ public class InMemoryMessageStorage implements MessageStorage {
     public boolean updateMessage(Message message) {
         for (Message mes : messages) {
             if (mes.getId().compareTo(message.getId()) == 0) {
+                if (mes.getDel()) {
+                    return false;
+                }
                 mes.setText(message.getText());
-                writeMessages(new File(FILE_NAME));
+                mes.setUpdate(true);
+                writeMessages(new File(Constants.FILE_NAME));
                 LogStorage.getInstance().addInformation(message.getId() + " update  Message by id");
                 return true;
             }
@@ -153,8 +156,8 @@ public class InMemoryMessageStorage implements MessageStorage {
     public boolean removeMessage(String messageId) {
         for (Message message : messages) {
             if (message.getId().compareTo(messageId) == 0) {
-                messages.remove(message);
-                writeMessages(new File(FILE_NAME));
+                message.setDel(true);
+                writeMessages(new File(Constants.FILE_NAME));
                 LogStorage.getInstance().addInformation(messageId + " del  Message by id");
                 return true;
             }

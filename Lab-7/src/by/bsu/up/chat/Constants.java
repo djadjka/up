@@ -13,7 +13,7 @@ public interface Constants {
     String REQUEST_HEADER_ACCESS_CONTROL_ORIGIN = "Access-Control-Allow-Origin";
     String REQUEST_HEADER_ACCESS_CONTROL_METHODS = "Access-Control-Allow-Methods";
 
-    String HEADER_VALUE_ALL_METHODS =String.join(", ",
+    String HEADER_VALUE_ALL_METHODS = String.join(", ",
             REQUEST_METHOD_GET, REQUEST_METHOD_POST, REQUEST_METHOD_PUT, REQUEST_METHOD_DELETE);
 
     int RESPONSE_CODE_OK = 200;
@@ -26,7 +26,8 @@ public interface Constants {
     String REQUEST_PARAMS_DELIMITER = "&";
     String REQUEST_PARAM_TOKEN = "token";
     String REQUEST_PARAM_MESSAGE_ID = "msgId";
-
+    String REGEX = "[{][^{]+[}]";
+    String FILE_NAME = "messages.txt";
     int MESSAGE_FLUSH_TARIGGER = 3;
 
     interface Message {
@@ -34,5 +35,7 @@ public interface Constants {
         String FIELD_AUTHOR = "author";
         String FIELD_TIMESTAMP = "timestamp";
         String FIELD_TEXT = "text";
+        String FIELD_DEL = "del";
+        String FIELD_UPDATE = "update";
     }
 }

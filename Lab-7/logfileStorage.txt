@@ -1,8 +1,3 @@
-Sun Apr 03 14:18:00 MSK 2016   Information 0 write Messages                                                                                                                            
-Sun Apr 03 14:18:00 MSK 2016   Information 1 write Messages                                                                                                                            
-Sun Apr 03 14:18:00 MSK 2016   Information 2 write Messages                                                                                                                            
-Sun Apr 03 14:18:00 MSK 2016   Information 3 write Messages                                                                                                                            
-Sun Apr 03 14:18:00 MSK 2016   Information 4 write Messages                                                                                                                            
-Sun Apr 03 14:18:00 MSK 2016   Information 8 update  Message by id                                                                                                                     
-Sun Apr 03 14:18:00 MSK 2016   Information 3 write Messages                                                                                                                            
-Sun Apr 03 14:18:00 MSK 2016   Information 1 del  Message by id                                                                                                                        
+Mon Apr 04 18:01:53 MSK 2016   Information 4 read Messages                                                                                                                             
+Mon Apr 04 18:01:53 MSK 2016   Information 4 write Messages                                                                                                                            
+Mon Apr 04 18:01:53 MSK 2016   Information 1 update  Message by id                                                                                                                     

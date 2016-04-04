@@ -117,11 +117,15 @@ public class MessageHelper {
         String author = ((String) jsonObject.get(Constants.Message.FIELD_AUTHOR));
         long timestamp = ((long) jsonObject.get(Constants.Message.FIELD_TIMESTAMP));
         String text = ((String) jsonObject.get(Constants.Message.FIELD_TEXT));
+        boolean del = ((boolean) jsonObject.get(Constants.Message.FIELD_DEL));
+        boolean update = ((boolean) jsonObject.get(Constants.Message.FIELD_UPDATE));
         Message message = new Message();
         message.setId(id);
         message.setAuthor(author);
         message.setTimestamp(timestamp);
         message.setText(text);
+        message.setDel(del);
+        message.setUpdate(update);
         return message;
     }
     public static Message  getIdTextMessage(InputStream inputStream) throws ParseException {
@@ -168,6 +172,9 @@ public class MessageHelper {
         jsonObject.put(Constants.Message.FIELD_AUTHOR, message.getAuthor());
         jsonObject.put(Constants.Message.FIELD_TIMESTAMP, message.getTimestamp());
         jsonObject.put(Constants.Message.FIELD_TEXT, message.getText());
+        jsonObject.put(Constants.Message.FIELD_DEL, message.getDel());
+        jsonObject.put(Constants.Message.FIELD_UPDATE, message.getUpdate());
+
         return jsonObject;
     }
 }
