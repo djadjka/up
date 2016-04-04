@@ -1,25 +1,30 @@
+package by.bsu.up.chat.storage;
+
+import by.bsu.up.chat.common.models.Message;
+import by.bsu.up.chat.logging.LogStorage;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintStream;
-import java.util.*;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+public class InMemoryMessageStorage implements MessageStorage {
 
-public class Messages implements MessageStorage {
     private List<Message> messages;
     private Gson gson;
     private final String REGEX = "[{][^{]+[}]";
-    private final int RECOMENDE_SIZE_MESSAGE = 140;
+    private final String FILE_NAME = "messages.txt";
 
-    public Messages() {
+    public InMemoryMessageStorage() {
         this.messages = new ArrayList<>();
         this.gson = new GsonBuilder().create();
+        readMessages(new File(FILE_NAME));
     }
 
 
@@ -37,13 +42,13 @@ public class Messages implements MessageStorage {
                     messages.add(gson.fromJson(sb.substring(m.start(), m.end()), Message.class));
                     counter++;
                 } catch (JsonSyntaxException e) {
-                    Log.getInstance().addException(e.toString());
+                    LogStorage.getInstance().addException(e.toString());
                 }
             }
-            Log.getInstance().addInformation(counter + " read Messages");
+            LogStorage.getInstance().addInformation(counter + " read Messages");
         } catch (FileNotFoundException e) {
             System.out.println(e.toString());
-            Log.getInstance().addException(e.toString());
+            LogStorage.getInstance().addException(e.toString());
         }
     }
 
@@ -59,40 +64,25 @@ public class Messages implements MessageStorage {
                 }
             }
             ps.print("]");
-            Log.getInstance().addInformation(messages.size() + " write Messages");
+            LogStorage.getInstance().addInformation(messages.size() + " write Messages");
         } catch (FileNotFoundException e) {
             System.out.println(e.toString());
-            Log.getInstance().addException(e.toString());
+            LogStorage.getInstance().addException(e.toString());
         }
     }
 
 
-    public boolean delMessage(String id) {
-        for (Message message : messages) {
-            if (message.getId().compareTo(id) == 0) {
-                messages.remove(message);
-                return true;
-            }
-        }
-        Log.getInstance().addInformation(id + " del  Message by id");
-        return false;
-    }
+
 
 
     private void oneMessagePrint(Message message) {
         System.out.println(message.getText());
     }
 
-    public List<Message> getMessageHistory() {
-        List<Message> copy = new ArrayList<>();
-        copy.addAll(messages);
-        Collections.sort(copy);
-        return copy;
-    }
 
     public List<Message> getMessageByAuthor(String author) {
         List<Message> temp = messages.stream().filter(message -> message.getAuthor().trim().compareTo(author.trim()) == 0).collect(Collectors.toList());
-        Log.getInstance().addInformation(temp.size() + " Found posts by author: " + author);
+        LogStorage.getInstance().addInformation(temp.size() + " Found posts by author: " + author);
         return temp;
     }
 
@@ -103,7 +93,7 @@ public class Messages implements MessageStorage {
                 temp.add(message);
             }
         }
-        Log.getInstance().addInformation(temp.size() + " Found posts by keyWord : " + keyWord);
+        LogStorage.getInstance().addInformation(temp.size() + " Found posts by keyWord : " + keyWord);
         return temp;
     }
 
@@ -116,27 +106,7 @@ public class Messages implements MessageStorage {
                 temp.add(message);
             }
         }
-        Log.getInstance().addInformation(temp.size() + " Found posts by RegExKeyWord : " + regExKeyWord);
-        return temp;
-    }
-
-    public List<Message> getMessageByPeriod(String start, String end) {
-        List<Message> temp = new ArrayList<>();
-        try {
-            long startCalendarDay = CalendarDay.getTimestamp(start);
-            long endCalendarDay = CalendarDay.getTimestamp(end);
-            long mesTimestamp;
-            for (Message message : messages) {
-                mesTimestamp = message.getTimestamp();
-                if ((mesTimestamp > startCalendarDay) && (mesTimestamp < endCalendarDay)) {
-                    temp.add(message);
-                }
-            }
-        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-            System.out.println("bad data Format");
-            Log.getInstance().addException(e.toString() + "bad data Format");
-        }
-        Log.getInstance().addInformation(temp.size() + " Found posts by time : " + start + " - " + end);
+        LogStorage.getInstance().addInformation(temp.size() + " Found posts by RegExKeyWord : " + regExKeyWord);
         return temp;
     }
 
@@ -148,11 +118,21 @@ public class Messages implements MessageStorage {
 
     @Override
     public List<Message> getPortion(Portion portion) {
-        return null;
+        int from = portion.getFromIndex();
+        if (from < 0) {
+            throw new IllegalArgumentException(String.format("Portion from index %d can not be less then 0", from));
+        }
+        int to = portion.getToIndex();
+        if (to != -1 && to < portion.getFromIndex()) {
+            throw new IllegalArgumentException(String.format("Porting last index %d can not be less then start index %d", to, from));
+        }
+        to = Math.max(to, messages.size());
+        return messages.subList(from, to);
     }
 
     @Override
     public void addMessage(Message message) {
+        writeMessages(new File(FILE_NAME));
         messages.add(message);
     }
 
@@ -161,6 +141,8 @@ public class Messages implements MessageStorage {
         for (Message mes : messages) {
             if (mes.getId().compareTo(message.getId()) == 0) {
                 mes.setText(message.getText());
+                writeMessages(new File(FILE_NAME));
+                LogStorage.getInstance().addInformation(message.getId() + " update  Message by id");
                 return true;
             }
         }
@@ -169,7 +151,15 @@ public class Messages implements MessageStorage {
 
     @Override
     public boolean removeMessage(String messageId) {
-        return delMessage(messageId);
+        for (Message message : messages) {
+            if (message.getId().compareTo(messageId) == 0) {
+                messages.remove(message);
+                writeMessages(new File(FILE_NAME));
+                LogStorage.getInstance().addInformation(messageId + " del  Message by id");
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

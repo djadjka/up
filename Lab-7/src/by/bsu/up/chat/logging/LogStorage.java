@@ -1,3 +1,6 @@
+package by.bsu.up.chat.logging;
+
+
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.Calendar;
@@ -8,9 +11,9 @@ public class LogStorage {
     private PrintStream ps;
     private static volatile LogStorage instance = new LogStorage();
     private final String DESIGN_OUTPUT = "%-30s %-10s %-140s%n";
-    private final  String FILE_NAME = "logfile.txt";
+    private final  String FILE_NAME = "logfileStorage.txt";
 
-    private Log() {
+    private LogStorage() {
         calendar = new GregorianCalendar();
         try {
             ps = new PrintStream(FILE_NAME);

@@ -1,8 +1,8 @@
-import java.io.Serializable;
-import java.util.Date;
-import java.util.UUID;
+package by.bsu.up.chat.common.models;
 
-public class Message implements Serializable ,Comparable<Message> {
+import java.io.Serializable;
+
+public class Message implements Serializable {
 
     private String id;
     private String author;
@@ -49,10 +49,5 @@ public class Message implements Serializable ,Comparable<Message> {
                 ", timestamp=" + timestamp +
                 ", text='" + text + '\'' +
                 '}';
-    }
-
-    @Override
-    public int compareTo(Message o) {
-        return (int) (this.getTimestamp() - o.getTimestamp());
     }
 }

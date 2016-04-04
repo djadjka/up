@@ -1,0 +1,8 @@
+Sun Apr 03 14:18:00 MSK 2016   Information 0 write Messages                                                                                                                            
+Sun Apr 03 14:18:00 MSK 2016   Information 1 write Messages                                                                                                                            
+Sun Apr 03 14:18:00 MSK 2016   Information 2 write Messages                                                                                                                            
+Sun Apr 03 14:18:00 MSK 2016   Information 3 write Messages                                                                                                                            
+Sun Apr 03 14:18:00 MSK 2016   Information 4 write Messages                                                                                                                            
+Sun Apr 03 14:18:00 MSK 2016   Information 8 update  Message by id                                                                                                                     
+Sun Apr 03 14:18:00 MSK 2016   Information 3 write Messages                                                                                                                            
+Sun Apr 03 14:18:00 MSK 2016   Information 1 del  Message by id                                                                                                                        
