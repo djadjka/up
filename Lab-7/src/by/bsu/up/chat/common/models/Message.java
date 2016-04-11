@@ -6,10 +6,10 @@ public class Message implements Serializable {
 
     private String id;
     private String author;
-    private long timestamp;
     private String text;
     private boolean del;
     private boolean update;
+    private String photoURL="";
 
     public String getId() {
         return id;
@@ -27,12 +27,12 @@ public class Message implements Serializable {
         this.author = author;
     }
 
-    public long getTimestamp() {
-        return timestamp;
+    public String getPhotoURL() {
+        return photoURL;
     }
 
-    public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
+    public void setPhotoURL(String photoURL) {
+        this.photoURL = photoURL;
     }
 
     public String getText() {
@@ -64,10 +64,10 @@ public class Message implements Serializable {
         return "Message{" +
                 "id='" + id + '\'' +
                 ", author='" + author + '\'' +
-                ", timestamp=" + timestamp +
                 ", text='" + text + '\'' + ", " +
                 "del='" + del + '\'' + ", " +
                 "update='" + update + '\'' +
+                ", photoURL='" + photoURL + '\'' +
                 '}';
     }
 }

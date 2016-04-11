@@ -37,5 +37,6 @@ public interface Constants {
         String FIELD_TEXT = "text";
         String FIELD_DEL = "del";
         String FIELD_UPDATE = "update";
+        String FIELD_PHOTOURL = "photoURL";
     }
 }

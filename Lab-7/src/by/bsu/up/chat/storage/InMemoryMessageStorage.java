@@ -157,6 +157,7 @@ public class InMemoryMessageStorage implements MessageStorage {
         for (Message message : messages) {
             if (message.getId().compareTo(messageId) == 0) {
                 message.setDel(true);
+                message.setText("");
                 writeMessages(new File(Constants.FILE_NAME));
                 LogStorage.getInstance().addInformation(messageId + " del  Message by id");
                 return true;
