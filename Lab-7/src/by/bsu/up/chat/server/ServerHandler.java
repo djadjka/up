@@ -105,7 +105,7 @@ public class ServerHandler implements HttpHandler {
 
     private Response doPost(HttpExchange httpExchange) {
         try {
-            Message message = MessageHelper.getClientMessage(httpExchange.getRequestBody());
+            Message message = MessageHelper.getPostMessage(httpExchange.getRequestBody());
             logger.info(String.format("Received new message from user: %s", message));
             messageStorage.addMessage(message);
             return Response.ok();
@@ -117,8 +117,9 @@ public class ServerHandler implements HttpHandler {
 
     private Response doPut(HttpExchange httpExchange) {
         try {
-            Message message = MessageHelper.getIdTextMessage(httpExchange.getRequestBody());
-            messageStorage.updateMessage(message);
+            Message message = MessageHelper.getPutMessage(httpExchange.getRequestBody());
+            logger.info(String.format("Received new message from user: %s", message));
+            messageStorage.addMessage(message);
             return Response.ok();
         } catch (ParseException e) {
             logger.error("Could not parse message.", e);
@@ -128,8 +129,9 @@ public class ServerHandler implements HttpHandler {
 
     private Response doDelete(HttpExchange httpExchange) {
         try {
-            String messageId = MessageHelper.getId(httpExchange.getRequestBody());
-            messageStorage.removeMessage(messageId);
+            Message message = MessageHelper.getDelMessage(httpExchange.getRequestBody());
+            logger.info(String.format("Received new message from user: %s", message));
+            messageStorage.addMessage(message);
             return Response.ok();
         } catch (ParseException e) {
             logger.error("Could not parse message.", e);

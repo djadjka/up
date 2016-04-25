@@ -131,40 +131,20 @@ public class InMemoryMessageStorage implements MessageStorage {
 
     @Override
     public void addMessage(Message message) {
-        writeMessages(new File(Constants.FILE_NAME));
         messages.add(message);
+        writeMessages(new File(Constants.FILE_NAME));
     }
 
     @Override
     public boolean updateMessage(Message message) {
-        for (Message mes : messages) {
-            if (mes.getId().compareTo(message.getId()) == 0) {
-                if (mes.getDel()) {
-                    return false;
-                }
-                mes.setText(message.getText());
-                mes.setUpdate(true);
-                writeMessages(new File(Constants.FILE_NAME));
-                LogStorage.getInstance().addInformation(message.getId() + " update  Message by id");
-                return true;
-            }
-        }
         return false;
     }
 
     @Override
     public boolean removeMessage(String messageId) {
-        for (Message message : messages) {
-            if (message.getId().compareTo(messageId) == 0) {
-                message.setDel(true);
-                message.setText("");
-                writeMessages(new File(Constants.FILE_NAME));
-                LogStorage.getInstance().addInformation(messageId + " del  Message by id");
-                return true;
-            }
-        }
         return false;
     }
+
 
     @Override
     public int size() {

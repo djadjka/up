@@ -7,9 +7,14 @@ public class Message implements Serializable {
     private String id;
     private String author;
     private String text;
-    private boolean del;
-    private boolean update;
-    private String photoURL="";
+    private String method;
+    private String photoURL = "";
+
+    public Message() {
+        this.author = "";
+        this.text = "";
+        this.photoURL = "";
+    }
 
     public String getId() {
         return id;
@@ -43,20 +48,12 @@ public class Message implements Serializable {
         this.text = text;
     }
 
-    public boolean getDel() {
-        return del;
+    public String getMethod() {
+        return method;
     }
 
-    public void setDel(boolean del) {
-        this.del = del;
-    }
-
-    public boolean getUpdate() {
-        return update;
-    }
-
-    public void setUpdate(boolean update) {
-        this.update = update;
+    public void setMethod(String method) {
+        this.method = method;
     }
 
     @Override
@@ -65,8 +62,7 @@ public class Message implements Serializable {
                 "id='" + id + '\'' +
                 ", author='" + author + '\'' +
                 ", text='" + text + '\'' + ", " +
-                "del='" + del + '\'' + ", " +
-                "update='" + update + '\'' +
+                "method='" + method + '\'' + ", " +
                 ", photoURL='" + photoURL + '\'' +
                 '}';
     }

@@ -1,13 +1,13 @@
 function Message(userNick, mesText, id, photoURL) {
+    this.method;
     this.author = userNick;
     this.text = mesText;
-    this.update = false;
-    this.del = false;
     this.photoURL = photoURL;
     this.id = id;
 }
 var mainUrl = 'http://192.168.0.107:8080/chat';
 var messages = [];
+var token = 'TN11EN';
 var delImgSrc = 'http://s1.iconbird.com/ico/1212/264/w16h161355246842delete6.png';
 var changeImgSrc = 'http://music.privet.ru/img/pics/edit-message-16x16.gif';
 var curentNick = '';
@@ -30,15 +30,19 @@ function Connect() {
     if (isConnected) {
         return;
     }
-    ajax('GET', mainUrl + '?token=TN11EN', null, function (responseText) {
-        messages = JSON.parse(responseText).messages;
-        printArrMess();
+    ajax('GET', mainUrl + '?token=' + token, null, function (responseText) {
+        if (isConnected) {
+            var newMes = JSON.parse(responseText).messages;
+            token = JSON.parse(responseText).token;
+            updatePage(newMes);
+        }
     });
     function whileConnected() {
         isConnected = setTimeout(function () {
-            ajax('GET', mainUrl + '?token=TN11EN', null, function (responseText) {
+            ajax('GET', mainUrl + '?token=' + token, null, function (responseText) {
                 if (isConnected) {
                     var newMes = JSON.parse(responseText).messages;
+                    token = JSON.parse(responseText).token;
                     updatePage(newMes);
                     whileConnected();
                 }
@@ -118,15 +122,7 @@ function changeNick() {
 
 function delMessage(evtObj) {
     var delMsgID = evtObj.target.parentNode.parentNode.parentNode.parentNode.id;
-
     ajax('DELETE', mainUrl, '{"id":"' + delMsgID + '"}', function () {
-        messages.forEach(function (item) {
-            if (item.id == delMsgID) {
-                item.del = true;
-                item.text = '';
-                return;
-            }
-        });
         evtObj.target.parentNode.parentNode.parentNode.parentNode.childNodes[1].childNodes[1].innerHTML = '';
         evtObj.target.parentNode.parentNode.parentNode.parentNode.childNodes[2].innerHTML = htmlImgDel;
     })
@@ -134,36 +130,17 @@ function delMessage(evtObj) {
 
 function updateMessage(evtObj) {
     var todoText = document.getElementsByClassName('entryField')[0];
-    var currentMessage;
+    if (todoText.value===''){
+        return;
+    }
     var chMsgID = evtObj.target.parentNode.parentNode.parentNode.parentNode.id;
-    if (todoText.value.trim()) {
-        messages.forEach(function (item) {
-            if (item.id === chMsgID) {
-                currentMessage = item;
-                return;
-            }
-        });
-        if (currentMessage.text == todoText.value) {
-            todoText.value = '';
-            return;
-        }
-        ajax('PUT', mainUrl, '{"id":"' + chMsgID + '", "text":"' + todoText.value + '"}', function () {
-            currentMessage.update = true;
-            currentMessage.text=todoText;
-            evtObj.target.parentNode.parentNode.parentNode.parentNode.childNodes[1].childNodes[1].innerHTML = todoText.value;
-            todoText.value = '';
-        });
+    ajax('PUT', mainUrl, '{"id":"' + chMsgID + '", "text":"' + todoText.value + '"}', function () {
+        evtObj.target.parentNode.parentNode.parentNode.parentNode.childNodes[1].childNodes[1].innerHTML = todoText.value;
+        todoText.value = '';
+    });
 
-    }
 }
 
-function printArrMess() {
-    var items = document.getElementsByClassName('messages')[0];
-    for (var i = 0; i < messages.length; i++) {
-        items.appendChild(createDivMessage(messages[i]));
-    }
-    items.scrollTop += items.scrollHeight;
-}
 
 function addMyMessage() {
     if (curentNick != '') {
@@ -174,11 +151,6 @@ function addMyMessage() {
         var message = new Message(curentNick, mesText, generateUUID(), photoURL);
         ajax('POST', mainUrl, JSON.stringify(message), function () {
             document.getElementsByClassName('entryField')[0].value = '';
-            messages.push(message);
-            var divMes = createDivMessage(messages[messages.length - 1]);
-            var items = document.getElementsByClassName('messages')[0];
-            items.appendChild(divMes);
-            items.scrollTop += items.scrollHeight;
         });
     }
     else {
@@ -239,8 +211,8 @@ function createRight(message) {
         imgDelButton.setAttribute('src', delImgSrc);
         delButton.appendChild(imgDelButton);
         divDelButton.appendChild(delButton);
-        if (message.del) {
-            delButton.setAttribute.disabled = true;
+        if (message.method === 'DELETE') {
+            delButton.disabled = true;
             right.appendChild(divDelButton);
         }
         else {
@@ -253,21 +225,11 @@ function createRight(message) {
         }
     }
     else {
-        if (message.del) {
-            imgDelButton.classList.add('delButton');
-            imgDelButton.setAttribute('src', delImgSrc);
-            delButton.disabled = true;
-            delButton.appendChild(imgDelButton);
-            divDelButton.appendChild(delButton);
-            right.appendChild(divDelButton);
+        if (message.method === 'DELETE') {
+            right.innerHTML=htmlImgDel;
         }
-        else if (message.update) {
-            imgChangeButton.classList.add('changeButton');
-            changeButton.disabled = true;
-            imgChangeButton.setAttribute('src', changeImgSrc);
-            changeButton.appendChild(imgChangeButton);
-            divChangeButton.appendChild(changeButton);
-            right.appendChild(divChangeButton);
+        else if (message.method === 'PUT') {
+            right.innerHTML=htmlImgChe;
         }
     }
     return right;
@@ -290,32 +252,43 @@ function redrawing() {
         }
     });
 }
+
 function updatePage(newMes) {
-    for (var i = 0; i < messages.length; i++) {
-        var div = document.getElementById(messages[i].id);
-        if (messages[i].del !== newMes[i].del) {
-            div.childNodes[1].childNodes[1].innerHTML = '';
-            div.childNodes[2].innerHTML = htmlImgDel;
-            messages[i].del = true;
-            messages[i].text = '';
-        }
-        else if (newMes[i].update && messages[i].text !== newMes[i].text) {
-            messages[i].update = true;
-            messages[i].text = newMes[i].text;
-            div.childNodes[1].childNodes[1].innerHTML = newMes[i].text;
-            if (curentNick !== newMes[i].author) {
-                div.childNodes[2].innerHTML = htmlImgChe;
-            }
-        }
-    }
-    if (messages.length < newMes.length) {
-        for (var i = messages.length; i < newMes.length; i++) {
+    for (var i = 0; i < newMes.length; i++) {
+        if (newMes[i].method === 'POST') {
             var divMes = createDivMessage(newMes[i]);
             messages.push(newMes[i]);
             var items = document.getElementsByClassName('messages')[0];
             items.appendChild(divMes);
             items.scrollTop += items.scrollHeight;
         }
+        else if (newMes[i].method === 'PUT') {
+            var div = document.getElementById(newMes[i].id);
+            for (var j = 0; j < messages.length; j++) {
+                if (messages[j].id === newMes[i].id) {
+                    messages[j].method = 'PUT';
+                    messages[j].text = newMes[i].text;
+                    div.childNodes[1].childNodes[1].innerHTML = newMes[i].text;
+                    if (curentNick !== messages[j].author) {
+                        div.childNodes[2].innerHTML = htmlImgChe;
+                    }
+                    break;
+                }
+            }
+        }
+        else {
+            var div = document.getElementById(newMes[i].id);
+            div.childNodes[1].childNodes[1].innerHTML = '';
+            div.childNodes[2].innerHTML = htmlImgDel;
+            for (var j = 0; j < messages.length; j++) {
+                if (messages[j].id === newMes[i].id) {
+                    messages[j].method = 'DELETE';
+                    messages[j].text = '';
+                }
+
+            }
+        }
+
     }
 }
 
@@ -323,8 +296,9 @@ function ajax(method, url, data, continueWith) {
     var xhr = new XMLHttpRequest();
     xhr.open(method || 'GET', url, true);
     xhr.onload = function () {
-        if (xhr.readyState !== 4)
+        if (xhr.readyState !== 4) {
             return;
+        }
 
         if (xhr.status != 200) {
             return;

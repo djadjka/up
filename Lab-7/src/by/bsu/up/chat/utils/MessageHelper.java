@@ -31,16 +31,17 @@ public class MessageHelper {
      * Builds token based on amount of messages, which are
      * already stored on server side or client side.
      * <p>
-     *     E.g. Client has 5 messages. It does not want to
-     *     retrieve messages it already has. So, client
-     *     passes 5 as argument to this method, and this method
-     *     will return a token, which says to server: Just give
-     *     me all messages, but skip first 5.
-     *
+     * E.g. Client has 5 messages. It does not want to
+     * retrieve messages it already has. So, client
+     * passes 5 as argument to this method, and this method
+     * will return a token, which says to server: Just give
+     * me all messages, but skip first 5.
      * <p>
-     *     On the other hand, server passes amount of messages it has
-     *     (size of messages collection). So, client can parse
-     *     token and understand how many messages are on server side
+     * <p>
+     * On the other hand, server passes amount of messages it has
+     * (size of messages collection). So, client can parse
+     * token and understand how many messages are on server side
+     *
      * @param receivedMessagesCount amount of messages to skip.
      * @return generated token
      */
@@ -51,6 +52,7 @@ public class MessageHelper {
 
     /**
      * Parses token and extract encoded amount of messages (typically - index)
+     *
      * @param token the token to be parsed
      * @return decoded amount messages (index)
      */
@@ -111,39 +113,39 @@ public class MessageHelper {
         return jsonObject.toJSONString();
     }
 
-    public static Message getClientMessage(InputStream inputStream) throws ParseException {
+    public static Message getPostMessage(InputStream inputStream) throws ParseException {
         JSONObject jsonObject = stringToJsonObject(inputStreamToString(inputStream));
         String id = ((String) jsonObject.get(Constants.Message.FIELD_ID));
         String author = ((String) jsonObject.get(Constants.Message.FIELD_AUTHOR));
         String photo = ((String) jsonObject.get(Constants.Message.FIELD_PHOTOURL));
         String text = ((String) jsonObject.get(Constants.Message.FIELD_TEXT));
-        boolean del = ((boolean) jsonObject.get(Constants.Message.FIELD_DEL));
-        boolean update = ((boolean) jsonObject.get(Constants.Message.FIELD_UPDATE));
         Message message = new Message();
         message.setId(id);
         message.setAuthor(author);
         message.setText(text);
-        message.setDel(del);
-        message.setUpdate(update);
+        message.setMethod(Constants.REQUEST_METHOD_POST);
         message.setPhotoURL(photo);
         return message;
     }
-    public static Message  getIdTextMessage(InputStream inputStream) throws ParseException {
+
+    public static Message getPutMessage(InputStream inputStream) throws ParseException {
         JSONObject jsonObject = stringToJsonObject(inputStreamToString(inputStream));
         String id = ((String) jsonObject.get(Constants.Message.FIELD_ID));
         String text = ((String) jsonObject.get(Constants.Message.FIELD_TEXT));
         Message message = new Message();
         message.setId(id);
         message.setText(text);
+        message.setMethod(Constants.REQUEST_METHOD_PUT);
         return message;
     }
-    public static String getId(InputStream inputStream) throws ParseException {
+
+    public static Message getDelMessage(InputStream inputStream) throws ParseException {
         JSONObject jsonObject = stringToJsonObject(inputStreamToString(inputStream));
-        return ((String) jsonObject.get(Constants.Message.FIELD_ID));
-
-
-
-
+        String id = ((String) jsonObject.get(Constants.Message.FIELD_ID));
+        Message message = new Message();
+        message.setId(id);
+        message.setMethod(Constants.REQUEST_METHOD_DELETE);
+        return message;
     }
 
 
@@ -171,8 +173,7 @@ public class MessageHelper {
         jsonObject.put(Constants.Message.FIELD_ID, message.getId());
         jsonObject.put(Constants.Message.FIELD_AUTHOR, message.getAuthor());
         jsonObject.put(Constants.Message.FIELD_TEXT, message.getText());
-        jsonObject.put(Constants.Message.FIELD_DEL, message.getDel());
-        jsonObject.put(Constants.Message.FIELD_UPDATE, message.getUpdate());
+        jsonObject.put(Constants.Message.FIELD_METHOD, message.getMethod());
         jsonObject.put(Constants.Message.FIELD_PHOTOURL, message.getPhotoURL());
 
         return jsonObject;

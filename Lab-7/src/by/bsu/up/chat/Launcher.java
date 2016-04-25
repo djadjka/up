@@ -27,7 +27,7 @@ public class Launcher {
     public static void main(String[] args) {
         if (args == null || args.length == 0) {
             logger.info(String.format("Port is not specified. Starting Server on default port %d", DEFAULT_SERVER_PORT));
-            launchServer(new String[] {SHORT_PARAM_PORT, String.valueOf(DEFAULT_SERVER_PORT) });
+            launchServer(new String[]{SHORT_PARAM_PORT, String.valueOf(DEFAULT_SERVER_PORT)});
             return;
         }
 
@@ -66,7 +66,7 @@ public class Launcher {
             logger.info(String.format("Get list of messages: " +
                     "GET http://%s:%d%s?token={token}", serverHost, port, Constants.CONTEXT_PATH));
             logger.info(String.format("Send message: " +
-                    "POST http://%s:%d%s provide body json in format {\"id\" : \"1\", \"author\":\"User1\", \"text\":\"Hello, all!\", \"timestamp\":1459169330000, \"del\":false, \"update\":false}",
+                            "POST http://%s:%d%s provide body json in format {\"id\" : \"1\", \"author\":\"User1\", \"text\":\"Hello, all!\"}",
                     serverHost, port, Constants.CONTEXT_PATH));
 
             server.createContext(Constants.CONTEXT_PATH, new ServerHandler());
