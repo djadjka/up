@@ -12,7 +12,10 @@ public class RegistrationServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String login = req.getParameter("login");
         String pass = req.getParameter("password");
-        if (!UserData.getInstance().compareLoginPass(login, pass)) {
+        if(login.equals("")||pass.equals("")){
+            req.setAttribute("infMes", "One of the boxes empty, repeat again");
+        }
+        else if (!UserData.getInstance().compareLoginPass(login, pass)) {
             UserData.getInstance().addUserData(login, pass);
             req.setAttribute("infMes", "Registration complied");
         } else {
