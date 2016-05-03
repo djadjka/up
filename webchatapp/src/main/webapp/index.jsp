@@ -1,9 +1,20 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
+<head>
+    <title>
+        Hello World Sample
+    </title>
+</head>
+
 <body>
-<div>JAVA_HOME=C:\Program Files\Java\jdk1.8.0_60</div>
-<div>M2_HOME=C:\Program Files (x86)\Apache\maven</div>
-<div>CATALINA_HOME=C:\Program Files (x86)\Apache\tomcat</div>
-<div>PATH=C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\ATI Technologies\ATI.ACE\Core-Static;C:\Program Files (x86)\Skype\Phone\;C:\Program Files\Git\cmd;C:\Program Files (x86)\Microsoft SQL Server\100\Tools\Binn\;C:\Program Files\Microsoft SQL Server\100\Tools\Binn\;C:\Program Files\Microsoft SQL Server\100\DTS\Binn\;C:\Program Files (x86)\Apache\maven\bin;C:\Program Files\Java\jdk1.8.0_60\bin;C:\Program Files (x86)\Apache\tomcat\bin</div>
-<div>USERNAME=djadjka.by</div>
+<h1>
+    <c:out value="${12+56*2}" />
+</h1>
+<form action="vars" method="post">
+    <input type="text" size="40" name="login" value="abc">
+    <input type="password" size="40" name="password" value="abc">
+    <button type=”submit”>Submit</button>
+</form>
 </body>
 </html>

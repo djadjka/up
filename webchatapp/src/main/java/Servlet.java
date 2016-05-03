@@ -3,18 +3,30 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 
 /**
  * Created by djadjka.by on 23.04.16.
  */
 @WebServlet(value = "/vars")
-public class Servlet extends HttpServlet{
+public class Servlet extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        final String[] vars = { "JAVA_HOME", "M2_HOME", "CATALINA_HOME", "PATH", "USERNAME"};
-        for (String var : vars) {
-            resp.getOutputStream().println(String.format("%s=%s", var, System.getenv(var)));
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String login = req.getParameter("login");
+        String pass = req.getParameter("password");
+        System.out.println(login+"  "+pass);
+        if(login.equals("abc")&&pass.equals("abc")){
+            req.getRequestDispatcher("index.html").forward(req, resp);
         }
+        else{
+            req.setAttribute("name","name");
+            req.getRequestDispatcher("index.jsp").forward(req, resp);
+        }
+
     }
 }
