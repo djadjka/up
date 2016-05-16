@@ -1,3 +1,4 @@
+import by.bsu.chat.Log;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import java.io.*;
@@ -19,7 +20,7 @@ public class UserData {
                 userDateMap.put(sc.next(), sc.next());
             }
         } catch (FileNotFoundException e) {
-            System.out.println("the path for the log was not found");
+            Log.getInstance().addException("tho path with user data not found");
         }
         try {
             writer = new FileWriter(new File(FILE_NAME), true);
@@ -37,8 +38,8 @@ public class UserData {
 
     public boolean compareLoginPass(String login, String pass) {
         try {
-            String HexPass = userDateMap.get(login);
-            if (HexPass.equals(DigestUtils.md5Hex(pass))) {
+            String HexPass = userDateMap.get(login.trim());
+            if (HexPass.equals(DigestUtils.md5Hex(pass.trim()))) {
                 return true;
             }
         } catch (NullPointerException e) {
@@ -49,13 +50,22 @@ public class UserData {
 
     public void addUserData(String login, String pass) {
         try {
-            String HexPass = DigestUtils.md5Hex(pass);
+            String HexPass = DigestUtils.md5Hex(pass.trim());
             writer.write("\r\n");
-            writer.write(login + "  " + HexPass);
+            writer.write(login.trim() + "  " + HexPass);
             writer.flush();
-            userDateMap.put(login, HexPass);
+            userDateMap.put(login.trim(), HexPass);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean checkLogin(String login) {
+        for (String item : userDateMap.keySet()) {
+            if (login.equals(item)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

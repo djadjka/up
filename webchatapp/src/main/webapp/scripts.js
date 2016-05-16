@@ -5,7 +5,7 @@ function Message(userNick, mesText, id, photoURL) {
     this.photoURL = photoURL;
     this.id = id;
 }
-var mainUrl = 'http://192.168.0.107:8080/chat';
+var mainUrl = '/chat';
 var messages = [];
 var token = 'TN11EN';
 var delImgSrc = 'http://s1.iconbird.com/ico/1212/264/w16h161355246842delete6.png';
@@ -56,12 +56,11 @@ function seconds(value) {
     return Math.round(value * 1000);
 }
 function restoreUser() {
-    if (localStorage.getItem('curentNick') || localStorage.getItem('photoURL')) {
-        curentNick = localStorage.getItem('curentNick');
-        photoURL = localStorage.getItem('photoURL');
-        document.getElementsByClassName('userName')[0].value = curentNick;
-        document.getElementsByClassName('selectPhoto')[0].value = photoURL;
-    }
+    curentNick = document.cookie.split('=')[1];
+    var text = document.createElement('h1');
+    text.appendChild(document.createTextNode('Hello '+ curentNick));
+    document.getElementsByClassName('helloUser')[0].appendChild(text);
+
 }
 function generateUUID() {
     var d = new Date().getTime();
@@ -72,20 +71,24 @@ function generateUUID() {
     });
 }
 
+function exit() {
+    document.cookie = 'login' + "=" + "; expires=Thu, 01 Jan 1970 00:00:01 GMT";
+    document.location.href = 'login.jsp';
+}
 function delegateClickEvent(evtObj) {
-    var classList1 = evtObj.target.classList;
-    if (evtObj.type === 'click' && classList1.contains('inputButton')) {
+    var classList = evtObj.target.classList;
+    if (evtObj.type === 'click' && classList.contains('inputButton')) {
         addMyMessage(evtObj);
     }
 
-    if (evtObj.type === 'click' && classList1.contains('delButton')) {
+    if (evtObj.type === 'click' && classList.contains('delButton')) {
         delMessage(evtObj);
     }
-    if (evtObj.type === 'click' && classList1.contains('changeButton')) {
+    if (evtObj.type === 'click' && classList.contains('changeButton')) {
         updateMessage(evtObj);
     }
-    if (evtObj.type === 'click' && classList1.contains('logInButton')) {
-        changeNick(evtObj);
+    if (evtObj.type === 'click' && classList.contains('exitButton')) {
+        exit();
     }
 }
 
@@ -96,29 +99,8 @@ function delegateKeydownEvent(evtObj) {
             addMyMessage(evtObj);
         }
     }
-    if (evtObj.type === 'keydown' && classList.contains('userName')) {
-        if (evtObj.keyCode == 13) {
-            changeNick(evtObj);
-        }
-    }
 }
 
-function changeNick() {
-    curentNick = document.getElementsByClassName('userName')[0].value.trim();
-    alert(curentNick);
-    redrawing();
-    if (document.getElementById('LoginCheckBox').checked) {
-        localStorage.setItem('curentNick', curentNick);
-        localStorage.setItem('photoURL', photoURL);
-    }
-    else {
-        localStorage.setItem('curentNick', '');
-        localStorage.setItem('photoURL', '');
-    }
-
-    photoURL = document.getElementsByClassName('selectPhoto')[0].value.trim();
-
-}
 
 function delMessage(evtObj) {
     var delMsgID = evtObj.target.parentNode.parentNode.parentNode.parentNode.id;
@@ -130,7 +112,7 @@ function delMessage(evtObj) {
 
 function updateMessage(evtObj) {
     var todoText = document.getElementsByClassName('entryField')[0];
-    if (todoText.value===''){
+    if (todoText.value === '') {
         return;
     }
     var chMsgID = evtObj.target.parentNode.parentNode.parentNode.parentNode.id;
@@ -143,19 +125,14 @@ function updateMessage(evtObj) {
 
 
 function addMyMessage() {
-    if (curentNick != '') {
-        if (!document.getElementsByClassName('entryField')[0].value.trim()) {
-            return;
-        }
-        var mesText = document.getElementsByClassName('entryField')[0].value;
-        var message = new Message(curentNick, mesText, generateUUID(), photoURL);
-        ajax('POST', mainUrl, JSON.stringify(message), function () {
-            document.getElementsByClassName('entryField')[0].value = '';
-        });
+    if (!document.getElementsByClassName('entryField')[0].value.trim()) {
+        return;
     }
-    else {
-        alert('Enter user name');
-    }
+    var mesText = document.getElementsByClassName('entryField')[0].value;
+    var message = new Message(curentNick, mesText, generateUUID(), photoURL);
+    ajax('POST', mainUrl, JSON.stringify(message), function () {
+        document.getElementsByClassName('entryField')[0].value = '';
+    });
 }
 
 function createDivMessage(message) {
@@ -226,32 +203,15 @@ function createRight(message) {
     }
     else {
         if (message.method === 'DELETE') {
-            right.innerHTML=htmlImgDel;
+            right.innerHTML = htmlImgDel;
         }
         else if (message.method === 'PUT') {
-            right.innerHTML=htmlImgChe;
+            right.innerHTML = htmlImgChe;
         }
     }
     return right;
 }
 
-
-function redrawing() {
-    messages.forEach(function (item) {
-        var div = document.getElementById(item.id);
-        if (item.author == curentNick) {
-            div.classList.remove('message');
-            div.classList.add('myMessage');
-            div.replaceChild(createRight(item), div.lastChild);
-
-        }
-        else {
-            div.classList.remove('myMessage');
-            div.classList.add('message');
-            div.replaceChild(createRight(item), div.lastChild);
-        }
-    });
-}
 
 function updatePage(newMes) {
     for (var i = 0; i < newMes.length; i++) {
