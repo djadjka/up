@@ -15,7 +15,8 @@ public class UserData {
 
     private UserData() {
         try {
-            Scanner sc = new Scanner(new File(FILE_NAME));
+            File f = new File(FILE_NAME);
+            Scanner sc = new Scanner(f);
             while (sc.hasNext()) {
                 userDateMap.put(sc.next(), sc.next());
             }

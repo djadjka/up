@@ -55,13 +55,19 @@ function Connect() {
 function seconds(value) {
     return Math.round(value * 1000);
 }
+function getCookie(name) {
+    var matches = document.cookie.match(new RegExp(
+        "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+    ));
+    return matches ? decodeURIComponent(matches[1]) : undefined;
+}
 function restoreUser() {
-    curentNick = document.cookie.split('=')[1];
+    curentNick = getCookie('login');
     var text = document.createElement('h1');
     text.appendChild(document.createTextNode('Hello '+ curentNick));
     document.getElementsByClassName('helloUser')[0].appendChild(text);
-
 }
+
 function generateUUID() {
     var d = new Date().getTime();
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {

@@ -1,0 +1,7 @@
+by\bsu\chat\Constants.class
+by\bsu\chat\InMemoryMessageStorage.class
+by\bsu\chat\Log.class
+by\bsu\chat\Message.class
+by\bsu\chat\Constants$Message.class
+by\bsu\chat\MessageStorage.class
+by\bsu\chat\Portion.class
