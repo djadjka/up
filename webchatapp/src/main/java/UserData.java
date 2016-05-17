@@ -51,11 +51,11 @@ public class UserData {
 
     public void addUserData(String login, String pass) {
         try {
-            String HexPass = DigestUtils.md5Hex(pass.trim());
+            String hexPass = DigestUtils.md5Hex(pass.trim());
             writer.write("\r\n");
-            writer.write(login.trim() + "  " + HexPass);
+            writer.write(login.trim() + "  " + hexPass);
             writer.flush();
-            userDateMap.put(login.trim(), HexPass);
+            userDateMap.put(login.trim(), hexPass);
         } catch (IOException e) {
             e.printStackTrace();
         }
