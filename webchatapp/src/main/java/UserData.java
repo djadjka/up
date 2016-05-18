@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class UserData {
     private static UserData instance;
-    public static final String FILE_NAME = "UserData.txt";
+    public static final String FILE_NAME = "d:\\UserData.txt";
     private Map<String, String> userDateMap = new HashMap<String, String>();
     private FileWriter writer;
 
