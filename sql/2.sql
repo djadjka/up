@@ -1,0 +1,1 @@
+SELECT * FROM chat.users where id=2;

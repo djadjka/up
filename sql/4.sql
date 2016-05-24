@@ -1,0 +1,1 @@
+SELECT * FROM chat.messages where text REGEXP 'Hello|hello';
