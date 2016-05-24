@@ -1,0 +1,1 @@
+select * , timestamp(now())-timestamp(date) as first_mes_time  from  chat.messages order by date limit 1;
