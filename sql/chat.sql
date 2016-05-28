@@ -1,6 +1,6 @@
 CREATE DATABASE  IF NOT EXISTS `chat` /*!40100 DEFAULT CHARACTER SET cp1251 */;
 USE `chat`;
--- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.9, for Win32 (AMD64)
 --
 -- Host: localhost    Database: chat
 -- ------------------------------------------------------
@@ -25,14 +25,14 @@ DROP TABLE IF EXISTS `messages`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `messages` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `id` varchar(100) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
   `text` varchar(100) DEFAULT NULL,
+  `method` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id_idx` (`user_id`),
   CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=cp1251;
+) ENGINE=InnoDB DEFAULT CHARSET=cp1251;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +41,7 @@ CREATE TABLE `messages` (
 
 LOCK TABLES `messages` WRITE;
 /*!40000 ALTER TABLE `messages` DISABLE KEYS */;
-INSERT INTO `messages` VALUES (1,'2016-05-23 18:53:01',1,'Hello my friend '),(2,'2016-05-23 18:53:01',2,'mama'),(3,'2016-05-09 19:53:01',3,'papa'),(4,'2016-05-26 20:53:01',4,'Starting MySQL from the Windows Command Line'),(5,'2016-05-23 18:53:01',5,'123'),(6,'2016-05-09 18:58:23',6,'ds,fgsdlkmfg ksdfujsdjruf sdifjisd'),(7,'2016-05-23 18:53:45',7,'You can stop the MySQL server by executing this command:'),(8,'2016-05-09 18:53:30',8,'This command invokes the MySQL administrative '),(9,'2016-05-23 18:53:21',9,'the given data type'),(10,'2016-06-23 18:34:01',10,'Hello'),(11,'2010-05-23 18:53:01',1,'asdasdasd as das dasd'),(12,'2016-05-23 19:53:01',10,'asda sdas dasdds gdf h'),(13,'2016-06-23 18:53:01',10,'ds fsdf sdfg fdg dfg ');
+INSERT INTO `messages` VALUES ('1',1,'Hello my friend ',NULL),('10',10,'Hello',NULL),('11',1,'asdasdasd as das dasd',NULL),('12',10,'asda sdas dasdds gdf h',NULL),('13',10,'ds fsdf sdfg fdg dfg ',NULL),('2',2,'mama',NULL),('3',3,'papa',NULL),('4',4,'Starting MySQL from the Windows Command Line',NULL),('5',5,'123',NULL),('6',6,'ds,fgsdlkmfg ksdfujsdjruf sdifjisd',NULL),('7',7,'You can stop the MySQL server by executing this command:',NULL),('8',8,'This command invokes the MySQL administrative ',NULL),('9',9,'the given data type',NULL);
 /*!40000 ALTER TABLE `messages` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -54,7 +54,9 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) DEFAULT NULL,
+  `login` varchar(45) DEFAULT NULL,
+  `password` varchar(45) DEFAULT NULL,
+  `photoUrl` varchar(70) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=cp1251;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -65,7 +67,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Аладдин'),(2,'Ангел'),(3,'Лимон'),(4,'Пороф'),(5,'Лунио'),(6,'Перкосрак '),(7,'Оюшминальд'),(8,'Вилор'),(9,'Люцифер'),(10,'Даздраперм');
+INSERT INTO `users` VALUES (1,'Аладдин',NULL,NULL),(2,'Ангел',NULL,NULL),(3,'Лимон',NULL,NULL),(4,'Пороф',NULL,NULL),(5,'Лунио',NULL,NULL),(6,'Перкосрак ',NULL,NULL),(7,'Оюшминальд',NULL,NULL),(8,'Вилор',NULL,NULL),(9,'Люцифер',NULL,NULL),(10,'Даздраперм',NULL,NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -78,4 +80,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-05-24  8:11:56
+-- Dump completed on 2016-05-28 11:08:57
