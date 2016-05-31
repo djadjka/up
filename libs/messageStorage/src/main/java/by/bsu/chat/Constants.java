@@ -1,4 +1,5 @@
 package by.bsu.chat;
+
 public interface Constants {
     String PROTOCOL = "http";
     String CONTEXT_PATH = "/chat";
@@ -26,6 +27,18 @@ public interface Constants {
     String REGEX = "[{][^{]+[}]";
     String FILE_NAME = "H:\\messages.txt";
     int MESSAGE_FLUSH_TARIGGER = 3;
+
+    static final String DB_CONNECTION ="jdbc:mysql://127.0.0.1:3306/chat?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+    static final String SQL_INSERT = "insert into messages (id,method,author,text) values (?,?,?,?);";
+    static final String SQL_SELECT = "SELECT * FROM chat.messages limit ?,? ;";
+    static final String DB_USER = "root";
+    static final String DB_PASSWORD = "garena97";
+    static final int ID_POSITION = 1;
+    static final int METHOD_POSITION = 2;
+    static final int AUTHOR_POSITION = 3;
+    static final int TEXT_POSITION = 4;
+    static final int FROM_POSITION = 1;
+    static final int TO_POSITION = 1;
 
     interface Message {
         String FIELD_ID = "id";
